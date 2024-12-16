@@ -1,13 +1,4 @@
-import {
-  makeStyles,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from "@material-ui/core";
+import { makeStyles, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import EditIcon from "@material-ui/icons/Edit";
 import SingleImgCreator from "./SingleImgCreator";
@@ -64,46 +55,45 @@ const TableComponent = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.report.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell
-                    align="center"
-                    component="th"
-                    scope="row"
-                  >
-                    {row.id}
-                  </TableCell>
-                  <TableCell align="center">
-                    <SingleImgCreator
-                      itemCode={row.itemCode ? row.itemCode : ""}
-                      link={imageUrl}
-                    />
-                  </TableCell>
-                  <TableCell align="center">{row.itemCode}</TableCell>
-                  <TableCell align="center">
-                    {row.collection}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.consumerBase}
-                  </TableCell>
-                  <TableCell align="center">{row.itGroup}</TableCell>
-                  <TableCell align="center">{row.category}</TableCell>
-                  <TableCell align="center">{row.stdWt}</TableCell>
-                  <TableCell align="center">{row.stdUCP}</TableCell>
-                  <TableCell className="text-center bg-secondary">
-                    <EditIcon onClick={() => onEditChange(row)} cursor="pointer" />
-                  </TableCell>
-                  <TableCell align="center">{row.saleable}</TableCell>
-                  <TableCell align="center">{row.reasons}</TableCell>
-                  <TableCell align="center">
-                    {row.quality_Rating}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.quality_Reasons}
-                  </TableCell>
-                </TableRow>
-              ))}
+            {props.report.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => (
+              <TableRow key={i}>
+                <TableCell
+                  align="center"
+                  component="th"
+                  scope="row"
+                >
+                  {row.id}
+                </TableCell>
+                <TableCell align="center">
+                  <SingleImgCreator
+                    itemCode={row.itemCode ? row.itemCode : ""}
+                    link={imageUrl}
+                  />
+                </TableCell>
+                <TableCell align="center">{row.itemCode}</TableCell>
+                <TableCell align="center">
+                  {row.collection}
+                </TableCell>
+                <TableCell align="center">
+                  {row.consumerBase}
+                </TableCell>
+                <TableCell align="center">{row.itGroup}</TableCell>
+                <TableCell align="center">{row.category}</TableCell>
+                <TableCell align="center">{row.stdWt}</TableCell>
+                <TableCell align="center">{row.stdUCP}</TableCell>
+                <TableCell className="text-center bg-secondary">
+                  <EditIcon onClick={() => onEditChange(row)} cursor="pointer" />
+                </TableCell>
+                <TableCell align="center">{row.saleable}</TableCell>
+                <TableCell align="center">{row.reasons}</TableCell>
+                <TableCell align="center">
+                  {row.quality_Rating}
+                </TableCell>
+                <TableCell align="center">
+                  {row.quality_Reasons}
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <TablePagination

@@ -39,7 +39,7 @@ export const ProductCartL3 = () => {
 
     const GetStatusReport = (storeCode) => {
         setLoading(true);
-        APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+        APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     setStatusData({
@@ -65,7 +65,7 @@ export const ProductCartL3 = () => {
 
     useEffect(() => {
         setLoading(true);
-        APIGetDropdownList(`/npim/dropdown/ALL/ALL/ALL/ALL`)
+        APIGetDropdownList(`/NPIM/base/npim/dropdown/ALL/ALL/ALL/ALL`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setCollectionList(response.data.value);
@@ -78,7 +78,7 @@ export const ProductCartL3 = () => {
         if (collectionValue || collval) {
             const collectionVal = collectionValue ? collectionValue : collval;
             setLoading(true);
-            APIGetDropdownCategory(`/npim/dropdown/${collectionVal}/1/1/ALL`)
+            APIGetDropdownCategory(`/NPIM/base/npim/dropdown/${collectionVal}/1/1/ALL`)
                 .then(res => res).then(response => {
                     if (response.data.code === "1000") {
                         setCateogryList(response.data.value);

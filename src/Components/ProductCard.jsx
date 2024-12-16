@@ -54,7 +54,7 @@ const ProductCard = ({ cardDetails, AlertPopup, PdtCardData }) => {
             strCode: storeCode,
             submitStatus: "Wishlist",
         };
-        APISaveFormDataL3(`/npim/insert/responses/from/L3`, WislistPayload)
+        APISaveFormDataL3(`/NPIML3/npim/insert/responses/from/L3`, WislistPayload)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     AlertPopup({

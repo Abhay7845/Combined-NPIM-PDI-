@@ -5,11 +5,12 @@ import { AppBar, Drawer, IconButton, TextField, Toolbar } from "@material-ui/cor
 import StatusTabular from "./StatusTabular";
 import { useStyles } from "../Style/LowerHeader";
 import { useNavigate, useParams } from "react-router-dom";
-import { specialChars } from "../DataCenter/DataList";
+import { L1L2Reports, specialChars } from "../DataCenter/DataList";
 import { BsCardList, BsCart3 } from "react-icons/bs";
 import { BiHomeAlt } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineBarChart } from "react-icons/ai";
 import { APIGetReportL3 } from "../HostManager/CommonApiCallL3";
+import StatusTabularL1L2 from "./StatusTabularL1L2";
 
 const LowerHeader = (props) => {
   const classes = useStyles();
@@ -65,14 +66,14 @@ const LowerHeader = (props) => {
 
   const ReportsRouting = () => {
     if (loginData.role === "L1" || loginData.role === "L2") {
-      navigate(`/NpimPortal/reportL1andL2/${storeCode}/${rsoName}`);
+      navigate(`/${L1L2Reports}/${storeCode}/${rsoName}`);
     } else if (loginData.role === "L3") {
       navigate(`/NpimPortal/reportL3/${storeCode}/${rsoName}`);
     }
   }
 
   const GetCardSttudValue = (storeCode) => {
-    APIGetReportL3(`/npim/summary/report/L3/${storeCode}/StuddedValue`)
+    APIGetReportL3(`/NPIML3/npim/summary/report/L3/${storeCode}/StuddedValue`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setCardStuddData(response.data.value);
@@ -81,7 +82,7 @@ const LowerHeader = (props) => {
   }
 
   const GetCardPlainValue = (storeCode) => {
-    APIGetReportL3(`/npim/summary/report/L3/${storeCode}/PlainValue`)
+    APIGetReportL3(`/NPIML3/npim/summary/report/L3/${storeCode}/PlainValue`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setCardPlainData(response.data.value);
@@ -97,7 +98,8 @@ const LowerHeader = (props) => {
   return (
     <React.Fragment>
       <Drawer anchor="top" open={statusCloserOpener} onClick={statusOpener}>
-        <StatusTabular statusData={props.statusData} />
+        {loginData.role === "L3" ? <StatusTabular statusData={props.statusData} /> :
+          <StatusTabularL1L2 statusData={props.statusData} />}
       </Drawer>
       <section className="lower_header_show">
         <div className={classes.root}>

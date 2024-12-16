@@ -20,7 +20,7 @@ import { BlinkingComponent, SmallDataTable } from "../Components/ComponentForL3"
 import { useStyles } from "../Style/IndentL3";
 import { imageUrl } from "../DataCenter/DataList";
 import Loader from "../Components/Loader";
-import { APIGetCatList, APIGetCatPBStoreWise, APIGetPreNextProductData, APIGetStatuL3, APIInsLimit, APIPNPIMProductData, APISaveFormDataL3, APISetCatCode } from "../HostManager/CommonApiCallL3";
+import { APICheckItemCode, APIGetCatList, APIGetCatPBStoreWise, APIGetPreNextProductData, APIGetStatuL3, APIInsLimit, APIPNPIMProductData, APISaveFormDataL3, APISetCatCode } from "../HostManager/CommonApiCallL3";
 import CoupleBandStoneTable from "../Components/NewComponents/CoupleBandStoneTable";
 import { toast } from "react-toastify";
 import { sizeUCPToKey } from "../DataCenter/DataList";
@@ -114,7 +114,7 @@ const IndentL3 = () => {
             itemCode: feedShowState.itemCode,
             direction: direction,
         };
-        APIGetPreNextProductData(`/npim/get/product/details/PreNex`, NextProductPayload)
+        APIGetPreNextProductData(`/NPIM/base/npim/get/product/details/PreNex`, NextProductPayload)
             .then(res => res).then((response) => {
                 if (response.data.code === "1001") {
                     setAlertPopupStatus({
@@ -168,7 +168,7 @@ const IndentL3 = () => {
 
     const GetProductDetailsBySearchPnpim = (productDetails) => {
         setLoading(true);
-        APIPNPIMProductData(`/npim/get/product/details`, productDetails)
+        APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
             .then(res => res).then((response) => {
                 console.log("response==>", response.data);
                 sessionStorage.removeItem("CardItemCode");
@@ -228,9 +228,28 @@ const IndentL3 = () => {
             }).catch((error) => setLoading(false));
     }
 
+    const CheckItemCode = (itemCode) => {
+        setLoading(true);
+        APICheckItemCode(`/api/NPIM/l1l2/get/check/itemCode?itemcode=${itemCode}`)
+            .then(res => res).then(response => {
+                if (response.data.code === "1000") {
+                    GetProductDetailsBySearchPnpim(productDetails);
+                } else {
+                    setAlertPopupStatus({
+                        status: true,
+                        main: "ItemCode Not In Master",
+                        contain: "",
+                        mode: true,
+                    });
+                    setLoading(false);
+                }
+            }).then(err => setLoading(false));
+    }
+
+
     const GetStatusReport = (storeCode) => {
         setLoading(true);
-        APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+        APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     setStatusData({
@@ -283,7 +302,7 @@ const IndentL3 = () => {
 
     useEffect(() => {
         if (productDetails.itemCode) {
-            GetProductDetailsBySearchPnpim(productDetails);
+            CheckItemCode(productDetails.itemCode);
         }
     }, [productDetails.itemCode]);
 
@@ -310,7 +329,7 @@ const IndentL3 = () => {
 
     const InsertIntoLimitCatPb = () => {
         const catPB = feedShowState.catPB ? feedShowState.catPB : "1";
-        APIInsLimit(`/ins/limit/table/${storeCode}/${catPB}`)
+        APIInsLimit(`/NPIML3/ins/limit/table/${storeCode}/${catPB}`)
             .then(res => res).then((response) => {
             }).catch(err => setLoading(false));
     }
@@ -348,7 +367,7 @@ const IndentL3 = () => {
             tagQuantitys: allDataFromValidation.tegQuantityRes,
         };
         setLoading(true);
-        APISaveFormDataL3(`/npim/insert/responses/from/L3`, WishlistPayload)
+        APISaveFormDataL3(`/NPIML3/npim/insert/responses/from/L3`, WishlistPayload)
             .then(res => res).then((response) => {
                 setClick(false);
                 if (response.data.code === "1001") {
@@ -443,7 +462,7 @@ const IndentL3 = () => {
         };
         console.log("IndentPdtPayload==>", IndentPdtPayload);
         setLoading(true);
-        APISaveFormDataL3(`/npim/insert/responses/from/L3`, IndentPdtPayload)
+        APISaveFormDataL3(`/NPIML3/npim/insert/responses/from/L3`, IndentPdtPayload)
             .then(res => res).then((response) => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1001") {
@@ -540,7 +559,7 @@ const IndentL3 = () => {
 
     const GetCatPBLimit = (inputData) => {
         setLoading(true);
-        APIGetCatPBStoreWise(`/get/catPB/limit/storewise/${storeCode}/${feedShowState.catPB}`)
+        APIGetCatPBStoreWise(`/NPIM/base/get/catPB/limit/storewise/${storeCode}/${feedShowState.catPB}`)
             .then(res => res).then((response) => {
                 console.log("response==>", response.data.value);
                 if (response.data.code === "1000") {
@@ -557,7 +576,7 @@ const IndentL3 = () => {
     const InsertIntoLimitTable = (inputData) => {
         setLoading(true);
         const catPB = feedShowState.catPB ? feedShowState.catPB : "1";
-        APIInsLimit(`/ins/limit/table/${storeCode}/${catPB}`)
+        APIInsLimit(`/NPIML3/ins/limit/table/${storeCode}/${catPB}`)
             .then(res => res).then((response) => {
                 if (response.data.Code === "1000") {
                     if (response.data.value.toUpperCase() === "SUCCESS") {
@@ -664,12 +683,12 @@ const IndentL3 = () => {
             tagQuantitys: filteredTags,
         };
         console.log("inputDataPayload==>", inputDataPayload);
-        // if (value === "Wishlist") {
-        //     WishlistYourProducts("Wishlist");
-        // } else if (value === "Indent") {
-        //     // IndentYourProduct("Indent");
-        //     InsertIntoLimitTable(inputDataPayload);
-        // }
+        if (value === "Wishlist") {
+            WishlistYourProducts("Wishlist");
+        } else if (value === "Indent") {
+            // IndentYourProduct("Indent");
+            InsertIntoLimitTable(inputDataPayload);
+        }
         window.scrollTo({ top: "0", behavior: "smooth" });
     };
 

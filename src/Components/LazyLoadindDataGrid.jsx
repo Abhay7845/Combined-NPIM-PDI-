@@ -48,7 +48,7 @@ function CustomToolbar(props) {
     props.handelOpen();
   };
   const errorHandling = (storeCode) => {
-    APIUpdateStaus(`/npim/L3/store/status/update/${storeCode}`)
+    APIUpdateStaus(`/NPIML3/npim/L3/store/status/update/${storeCode}`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setAlertPopupStatus({
@@ -62,7 +62,7 @@ function CustomToolbar(props) {
   };
 
   const handelSendMail = () => {
-    APIMailContentIndent(`/new/npim/L3/mail/content/${storeCode}/Indent`)
+    APIMailContentIndent(`/NPIML3/new/npim/L3/mail/content/${storeCode}/Indent`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           const success = 'Thankyou for completing the Indent Confirmation Process successfully';

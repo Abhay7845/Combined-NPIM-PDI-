@@ -16,7 +16,7 @@ import AlertPopup from "../Components/AlertPopup";
 import { BlinkingComponent, SmallDataTable } from "../Components/ComponentForL3";
 import { useStyles } from "../Style/IndentL3";
 import { imageUrl } from "../DataCenter/DataList";
-import { APIGetCatList, APIGetCatPBStoreWise, APIGetSizeDropdown, APIGetStatuL3, APIInsLimit, APIPNPIMProductData, APISaveFormDataL3, APISetCatCode } from "../HostManager/CommonApiCallL3";
+import { APIGetCatList, APIGetCatPBStoreWise, APIGetStatuL3, APIInsLimit, APIPNPIMProductData, APISaveFormDataL3, APISetCatCode } from "../HostManager/CommonApiCallL3";
 import CoupleBandStoneTable from "../Components/NewComponents/CoupleBandStoneTable";
 
 const IndentL3 = () => {
@@ -65,7 +65,7 @@ const IndentL3 = () => {
     setLoading(true);
     setDigit();
     if (productDetails.itemCode !== "") {
-      APIPNPIMProductData(`/npim/get/product/details`, productDetails)
+      APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
         .then((response) => {
           if (response.data.code === "1001") {
             document.getElementById("result").style.visibility = "hidden";
@@ -102,7 +102,7 @@ const IndentL3 = () => {
 
   const GetStatusReport = (storeCode) => {
     setLoading(true);
-    APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+    APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
@@ -185,7 +185,7 @@ const IndentL3 = () => {
       tagQuantitys: allDataFromValidation.tegQuantityRes,
     };
     setLoading(true);
-    APISaveFormDataL3(`/npim/insert/responses/from/L3`, inputData)
+    APISaveFormDataL3(`/NPIML3/npim/insert/responses/from/L3`, inputData)
       .then((response) => {
         if (response.data.code === "1001") {
           setAlertPopupStatus({
@@ -259,7 +259,7 @@ const IndentL3 = () => {
       tagQuantitys: allDataFromValidation.tegQuantityRes,
     };
     setLoading(true);
-    APISaveFormDataL3(`/npim/insert/responses/from/L3`, inputData)
+    APISaveFormDataL3(`/NPIML3/npim/insert/responses/from/L3`, inputData)
       .then(res => res).then((response) => {
         if (response.data.code === "1001") {
           setAlertPopupStatus({
@@ -326,7 +326,7 @@ const IndentL3 = () => {
   }
 
   const getCatPBLimit = (inputData) => {
-    APIGetCatPBStoreWise(`/get/catPB/limit/storewise/${storeCode}/${feedShowState.catPB}`)
+    APIGetCatPBStoreWise(`/NPIM/base/get/catPB/limit/storewise/${storeCode}/${feedShowState.catPB}`)
       .then((response) => {
         if (response.data.code === "1000") {
           FinalSubmit(inputData, response.data.value);
@@ -341,7 +341,7 @@ const IndentL3 = () => {
 
   const InsertIntoLimitTable = (inputData) => {
     const catPB = feedShowState.catPB ? feedShowState.catPB : "1";
-    APIInsLimit(`/ins/limit/table/${storeCode}/${catPB}`)
+    APIInsLimit(`/NPIML3/ins/limit/table/${storeCode}/${catPB}`)
       .then((response) => {
         if (response.data.Code === "1000") {
           if (response.data.value.toUpperCase() === "SUCCESS") {

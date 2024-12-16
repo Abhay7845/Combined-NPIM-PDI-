@@ -33,7 +33,7 @@ const LowerHeaderDigital = (props) => {
     });
 
     useEffect(() => {
-        APIGetDropdownList(`/npim/dropdown/ALL/ALL/ALL/ALL`)
+        APIGetDropdownList(`/NPIM/base/npim/dropdown/ALL/ALL/ALL/ALL`)
             .then((response) => {
                 if (response.data.code == "1000") {
                     setDropValueForCollectionState(response.data.value);
@@ -71,7 +71,7 @@ const LowerHeaderDigital = (props) => {
         });
         if (name === "collection") {
             setLoading(true);
-            APIGetDropdownCollectionList(`/npim/dropdown/${value}/ALL/ALL/ALL`)
+            APIGetDropdownCollectionList(`/NPIM/base/npim/dropdown/${value}/ALL/ALL/ALL`)
                 .then(res => res).then((response) => {
                     setDropValueForNeedState(response.data.value);
                     setDropValueForGroupState([]);
@@ -86,7 +86,7 @@ const LowerHeaderDigital = (props) => {
                 }).catch(error => console.log(""));
         } else if (name === "consumerBase") {
             setLoading(true);
-            APIGetDropdownConsumerBaseList(`/npim/dropdown/${dropState.collection}/${value}/ALL/ALL`)
+            APIGetDropdownConsumerBaseList(`/NPIM/base/npim/dropdown/${dropState.collection}/${value}/ALL/ALL`)
                 .then((response) => {
                     setDropValueForGroupState(response.data.value);
                     setDropValueForCategoryState([]);
@@ -100,7 +100,7 @@ const LowerHeaderDigital = (props) => {
         } else if (name === "groupData") {
             setLoading(true);
             setDropValueForCategoryState([]);
-            APIGetDropdownITGroupList(`/npim/dropdown/${dropState.collection}/${dropState.consumerBase}/${value}/ALL`)
+            APIGetDropdownITGroupList(`/NPIM/base/npim/dropdown/${dropState.collection}/${dropState.consumerBase}/${value}/ALL`)
                 .then((response) => {
                     if (response.data.code === "1000") {
                         setDropValueForCategoryState(response.data.value);
@@ -115,8 +115,6 @@ const LowerHeaderDigital = (props) => {
                 }).catch(error => setLoading(false));
         }
     };
-
-
 
     const mySearchClickHandler = () => {
         if (props.L3) {

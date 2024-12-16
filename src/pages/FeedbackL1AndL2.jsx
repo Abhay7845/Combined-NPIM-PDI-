@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import StarIcon from "@material-ui/icons/Star";
 import { imageUrl, feedbackl1l2Navigate } from "../DataCenter/DataList";
-import MuliSelectDropdownField, { MuliSelectDropdownFieldQualityFeedback } from "../Components/MuliSelectDropdownField";
+import { MuliSelectDropdownFieldQualityFeedback, MuliSelectDropdownField } from "../Components/MuliSelectDropdownField";
 import NpimDataDisplay from "../Components/NpimDataDisplay";
 import { Grid, Button, Typography, CssBaseline } from "@material-ui/core";
 import { useParams } from "react-router";
@@ -78,7 +78,7 @@ const FeedbackL1AndL2 = () => {
   // FOR DNPIM LOGIN TYPE
   const GetProductDetailsDnpim = (productDetails) => {
     setLoading(true);
-    APIDNPIMProductData(`/dnpim/get/product/details/`, productDetails)
+    APIDNPIMProductData(`/NPIM/base/dnpim/get/product/details/`, productDetails)
       .then(res => res).then((response) => {
         if (response.data.code === "1001") {
           document.getElementById("result").style.visibility = "hidden";
@@ -109,7 +109,7 @@ const FeedbackL1AndL2 = () => {
   // FOR PNPIM LOGIN TYPE 
   const GetProductDetailsPnpim = (productDetails) => {
     setLoading(true);
-    APIPNPIMProductData(`/npim/get/product/details`, productDetails)
+    APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
       .then((response) => {
         if (response.data.code === "1001") {
           document.getElementById("result").style.visibility = "hidden";
@@ -138,11 +138,12 @@ const FeedbackL1AndL2 = () => {
   }
 
   useEffect(() => {
-    APIGetStatusReports(`/new/npim/status/L1/${storeCode}`)
+    APIGetStatusReports(`/api/NPIM/l1l2/get/feedback/status?strCode=${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
-            col: response.data.coloum,
+            // col: response.data.coloum,
+            col: ["ID", "NEEDSTATE", "TOTALSKU", "GIVENFEEDBACK", "REMAININGSKUCOUNT"],
             row: response.data.value,
           });
         }
@@ -172,7 +173,7 @@ const FeedbackL1AndL2 = () => {
       itemCode: feedShowState.itemCode,
       direction: direction,
     };
-    APIGetPreNextProductData(`/npim/get/product/details/PreNex`, Input)
+    APIGetPreNextProductData(`/NPIM/base/npim/get/product/details/PreNex`, Input)
       .then(res => res).then((response) => {
         let mailSms = "";
         if (response.data.code === "1001") {

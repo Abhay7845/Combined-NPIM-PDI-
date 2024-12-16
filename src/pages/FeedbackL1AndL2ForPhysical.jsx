@@ -3,8 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Style/CssStyle/FeedbackL1AndL2.css";
 import UpperHeader from "../Components/UpperHeader";
 import LowerHeader from "../Components/LowerHeader";
-import MuliSelectDropdownField from "../Components/MuliSelectDropdownField";
-import axios from "axios";
 import NpimDataDisplay from "../Components/NpimDataDisplay";
 import {
   FormGroup,
@@ -25,6 +23,7 @@ import AlertPopup from "../Components/AlertPopup";
 import { useStyles } from "../Style/FeedbackL1AndL2ForPhysical";
 import { imageUrl } from "../DataCenter/DataList";
 import { APIGetStatusReports, APIInsertDataL1L2, APIPNPIMProductData } from "../HostManager/CommonApiCallL3";
+import { MuliSelectDropdownField } from "../Components/MuliSelectDropdownField";
 
 const FeedbacL1AndL2ForPhysical = () => {
   const classes = useStyles();
@@ -73,7 +72,7 @@ const FeedbacL1AndL2ForPhysical = () => {
 
   useEffect(() => {
     setLoading(true);
-    APIPNPIMProductData(`/npim/get/product/details`, productDetails)
+    APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
       .then(res => res).then((response) => {
         if (response.data.code === "1001") {
           setAlertPopupStatus({
@@ -88,11 +87,12 @@ const FeedbacL1AndL2ForPhysical = () => {
         setLoading(false);
       }).catch((error) => setLoading(false));
 
-    APIGetStatusReports(`/new/npim/status/L1/${storeCode}`)
+    APIGetStatusReports(`/api/NPIM/l1l2/get/feedback/status?strCode=${storeCode}`)
       .then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
-            col: response.data.coloum,
+            // col: response.data.coloum,
+            col: ["ID", "NEEDSTATE", "TOTALSKU", "GIVENFEEDBACK", "REMAININGSKUCOUNT"],
             row: response.data.value,
           });
         }

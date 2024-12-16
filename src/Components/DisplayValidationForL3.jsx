@@ -83,7 +83,7 @@ export default function DisplayValidationComponent(props) {
     }, [digit]);
 
     useEffect(() => {
-        APIGetSizeDropdown(`/npim/size/dropdown/${itemCode}`)
+        APIGetSizeDropdown(`/NPIML3/npim/size/dropdown/${itemCode}`)
             .then((res) => res).then((result) => {
                 if (result.data.code === "1000") {
                     setSizeState(result.data.value);
@@ -99,7 +99,7 @@ export default function DisplayValidationComponent(props) {
 
     useEffect(() => {
         if (childNodeV) {
-            APIGetSizeDropdown(`/npim/size/dropdown/${childNodeV}`)
+            APIGetSizeDropdown(`/NPIML3/npim/size/dropdown/${childNodeV}`)
                 .then((res) => res).then((result) => {
                     if (result.data.code === "1000") {
                         setChildNodeV(result.data.value);
@@ -110,7 +110,7 @@ export default function DisplayValidationComponent(props) {
 
     useEffect(() => {
         if (childNodeF) {
-            APIGetSizeDropdown(`/npim/size/dropdown/${childNodeF}`)
+            APIGetSizeDropdown(`/NPIML3/npim/size/dropdown/${childNodeF}`)
                 .then((res) => res).then((result) => {
                     if (result.data.code === "1000") {
                         setChildNodeF(result.data.value);
@@ -121,7 +121,7 @@ export default function DisplayValidationComponent(props) {
 
     useEffect(() => {
         if (childNodeN) {
-            APIGetSizeDropdown(`/npim/size/dropdown/${childNodeN}`)
+            APIGetSizeDropdown(`/NPIML3/npim/size/dropdown/${childNodeN}`)
                 .then((res) => res).then((result) => {
                     if (result.data.code === "1000") {
                         setChildNodeN(result.data.value);
@@ -132,7 +132,7 @@ export default function DisplayValidationComponent(props) {
 
     // THIS IS FOR GENTS SIZE FETCH API
     useEffect(() => {
-        APICoupleBandDropdown(`/npim/L3/dropdown/couple/band/${itemCode}/COUPLE%20GENTS`)
+        APICoupleBandDropdown(`/NPIML3/npim/L3/dropdown/couple/band/${itemCode}/COUPLE%20GENTS`)
             .then((res) => res).then((result) => {
                 setCoupleGentsSize(result.data.value);
             }).catch((error) => console.log(""));
@@ -140,7 +140,7 @@ export default function DisplayValidationComponent(props) {
 
     // THIS IS FOR LADIES SIZE FETCH API
     useEffect(() => {
-        APICoupleBandDropdown(`/npim/L3/dropdown/couple/band/${itemCode}/COUPLE%20LADIES`)
+        APICoupleBandDropdown(`/NPIML3/npim/L3/dropdown/couple/band/${itemCode}/COUPLE%20LADIES`)
             .then((res) => res).then((result) => {
                 setCoupleLadiesSize(result.data.value);
             }).catch((error) => console.log(""));

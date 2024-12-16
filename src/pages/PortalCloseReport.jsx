@@ -19,7 +19,7 @@ export default function PortelCloseReport(props) {
   });
 
   function ReportRestCall() {
-    APIClosePortal(`/npim/item/wise/rpt/L3/for/close/portel/${storeCode}/${level}`)
+    APIClosePortal(`/NPIML3/npim/item/wise/rpt/L3/for/close/portel/${storeCode}/${level}`)
       .then((response) => {
         if (response.data.code === "1000") {
           setReport({

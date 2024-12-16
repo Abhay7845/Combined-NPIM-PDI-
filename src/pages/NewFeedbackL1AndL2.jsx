@@ -18,11 +18,10 @@ import ImgShow from "../Components/ImgShow";
 import AlertPopup from "../Components/AlertPopup";
 import { useStyles } from "../Style/FeedbackL1AndL2ForPhysical";
 import Loader from "../Components/Loader";
-import moment from 'moment';
-import { APIDNPIMProductData, APIGetPreNextProductData, APIGetStatusReports, APIInsertDataL1L2, APIPNPIMProductData } from "../HostManager/CommonApiCallL3";
+import { APICheckItemCode, APIDNPIMProductData, APIGetPreNextProductData, APIGetStatusReports, APIInsertRatingL1L2Feedback, APIPNPIMProductData } from "../HostManager/CommonApiCallL3";
 import { L1L2ProductsInfo } from "../Components/NewComponents/L1L2ProductsInfo";
-import MuliSelectDropdownField from "../Components/MuliSelectDropdownField";
 import { toast } from "react-toastify";
+import { MuliSelectDropdownField } from "../Components/MuliSelectDropdownField";
 
 const NewFeedbackL1AndL2 = () => {
     const classes = useStyles();
@@ -55,7 +54,6 @@ const NewFeedbackL1AndL2 = () => {
         itemCode: "",
         setDropState: "",
     });
-
     const [productDetailsDigital, setProductDetailsDigital] = useState({
         storeCode: storeCode,
         collection: "ALL",
@@ -63,8 +61,6 @@ const NewFeedbackL1AndL2 = () => {
         group: "ALL",
         category: "ALL",
     });
-
-
 
     const WeightageQ1 = 4 * Number(feedValueQ1);
     const WeightageQ2 = 7 * Number(feedValueQ2);
@@ -102,7 +98,7 @@ const NewFeedbackL1AndL2 = () => {
     // FOR DNPIM LOGIN TYPE
     const GetProductDetailsDnpim = (productDetails) => {
         setLoading(true);
-        APIDNPIMProductData(`/dnpim/get/product/details/`, productDetails)
+        APIDNPIMProductData(`/NPIM/base/dnpim/get/product/details/`, productDetails)
             .then(res => res).then((response) => {
                 if (response.data.code === "1001") {
                     document.getElementById("result").style.visibility = "hidden";
@@ -130,11 +126,13 @@ const NewFeedbackL1AndL2 = () => {
             }).catch((error) => setLoading(false));
     }
 
+
+
     // FOR PNPIM LOGIN TYPE 
     const GetProductDetailsPnpim = (productDetails) => {
-        setLoading(true);
-        APIPNPIMProductData(`/npim/get/product/details`, productDetails)
+        APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
             .then((response) => {
+                console.log("response==>", response.data);
                 if (response.data.code === "1001") {
                     document.getElementById("result").style.visibility = "hidden";
                     setAlertPopupStatus({
@@ -161,12 +159,32 @@ const NewFeedbackL1AndL2 = () => {
             }).catch((error) => setLoading(false));
     }
 
+    const CheckItemCode = (itemCode) => {
+        setLoading(true);
+        APICheckItemCode(`/api/NPIM/l1l2/get/check/itemCode?itemcode=${itemCode}`)
+            .then(res => res).then(response => {
+                console.log("response==>", response.data);
+                if (response.data.code === "1000") {
+                    GetProductDetailsPnpim(productDetails);
+                } else {
+                    setAlertPopupStatus({
+                        status: true,
+                        main: "ItemCode Not In Master",
+                        contain: "",
+                        mode: true,
+                    });
+                    setLoading(false);
+                }
+            }).then(err => setLoading(false));
+    }
+
     useEffect(() => {
-        APIGetStatusReports(`/new/npim/status/L1/${storeCode}`)
+        APIGetStatusReports(`/api/NPIM/l1l2/get/feedback/status?strCode=${storeCode}`)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     setStatusData({
-                        col: response.data.coloum,
+                        // col: response.data.coloum,
+                        col: ["ID", "NEEDSTATE", "TOTALSKU", "GIVENFEEDBACK", "REMAININGSKUCOUNT"],
                         row: response.data.value,
                     });
                 }
@@ -181,10 +199,10 @@ const NewFeedbackL1AndL2 = () => {
     }, [productDetailsDigital]);
 
     useEffect(() => {
-        if (sessionStorage.getItem("Npim-type") === "PNPIM" && productDetails.itemCode !== "") {
-            GetProductDetailsPnpim(productDetails);
+        if (sessionStorage.getItem("Npim-type") === "PNPIM" && productDetails.itemCode) {
+            CheckItemCode(productDetails.itemCode);
         }
-    }, [productDetails]);
+    }, [productDetails.itemCode]);
 
     const onClickNextPreBtnHandler = (direction) => {
         setLoading(true);
@@ -197,8 +215,9 @@ const NewFeedbackL1AndL2 = () => {
             itemCode: feedShowState.itemCode,
             direction: direction,
         };
-        APIGetPreNextProductData(`/npim/get/product/details/PreNex`, Input)
+        APIGetPreNextProductData(`/NPIM/base/npim/get/product/details/PreNex`, Input)
             .then(res => res).then((response) => {
+                console.log("response==>", response.data);
                 if (response.data.code === "1001") {
                     setAlertPopupStatus({
                         status: true,
@@ -215,6 +234,7 @@ const NewFeedbackL1AndL2 = () => {
                         mode: true,
                     });
                 } else if (response.data.code === "1000") {
+                    document.getElementById("result").style.visibility = "visible";
                     setFeedShowState(response.data.value);
                 }
                 setLoading(false);
@@ -274,32 +294,69 @@ const NewFeedbackL1AndL2 = () => {
         setLoading(false);
         SetResetDrop(true);
     }
-
     const onClickSubmitBtnHandler = () => {
         if (feedValueQ1 && feedValueQ2 && feedValueQ3 && feedValueQ4) {
             const feedbackPayload = {
-                DoE: moment().format("YYYY-MM-DD"),
-                StrCode: storeCode,
-                Region: feedShowState.region,
-                Needstate: feedShowState.consumerBase,
-                Collection: feedShowState.collection,
-                ItGroup: feedShowState.itGroup,
-                Category: feedShowState.category,
-                CatPB: feedShowState.catPB,
-                ItemCode: feedShowState.itemCode,
-                Activity: feedShowState.activity,
-                Q1_Rating: feedValueQ1,
-                Q2_Rating: feedValueQ2,
-                Q3_Rating: feedValueQ3,
-                Q4_Rating: feedValueQ4,
-                Specific_Feedback: multiSelectValues.toString(),
-                RSOName: rsoName,
-                NpimEventNo: feedShowState.npimEventNo,
-                IndentLevelType: "L1L2",
-                SubmitStatus: "feedback",
-                Overall_Product_percentage: WeightageQ1 + WeightageQ2 + WeightageQ3 + WeightageQ4
+                doe: "",
+                strCode: storeCode,
+                region: feedShowState.region,
+                needstate: feedShowState.consumerBase,
+                collection: feedShowState.collection,
+                catPB: feedShowState.catPB,
+                itemCode: feedShowState.itemCode,
+                activity: feedShowState.activity,
+                itgroup: feedShowState.itGroup,
+                category: feedShowState.category,
+                q1_Rating: feedValueQ1,
+                q2_Rating: feedValueQ2,
+                q3_Rating: feedValueQ3,
+                q4_Rating: feedValueQ4,
+                specificFeedback: multiSelectValues.toString(),
+                rsoName: rsoName,
+                npimEventNo: feedShowState.npimEventNo,
+                indentLevelType: "L1L2",
+                submitStatus: "feedback",
+                overallProductPercentage: WeightageQ1 + WeightageQ2 + WeightageQ3 + WeightageQ4,
             }
-            console.log("feedbackPayload==>", feedbackPayload)
+            console.log("feedbackPayload==>", feedbackPayload);
+            setLoading(true);
+            APIInsertRatingL1L2Feedback(`/api/NPIM/l1l2/insert/response/l1l2`, feedbackPayload)
+                .then(res => res).then(response => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.getElementById("result").style.visibility = "hidden";
+                    console.log("response==>", response.data);
+                    if (response.data.code === "1000") {
+                        if (sessionStorage.getItem("Npim-type") === "DNPIM") {
+                            setAlertPopupStatus({
+                                status: true,
+                                main: "Feedback Submitted Successfuly",
+                                contain: "",
+                                mode: true,
+                            });
+                        }
+                        onClickNextPreBtnHandler("pre");
+                    }
+                    if (sessionStorage.getItem("Npim-type") === "PNPIM") {
+                        setAlertPopupStatus({
+                            status: true,
+                            main: "Feedback Submitted Successfuly",
+                            contain: "",
+                            mode: true,
+                        });
+                    }
+                    RecetAllFeildData();
+                    productDetails.setDropState("");
+                    setProductDetails({
+                        storeCode: storeCode,
+                        collection: "ALL",
+                        consumerBase: "ALL",
+                        group: "ALL",
+                        category: "ALL",
+                        itemCode: "",
+                        setDropState: "",
+                    });
+                    setLoading(false);
+                }).catch(err => setLoading(false));
         } else {
             toast.error("Please Insure All The Questions Are Answered", { theme: "colored" })
         }
@@ -378,7 +435,6 @@ const NewFeedbackL1AndL2 = () => {
                                                         '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                                     }}
                                                 />
-                                                <b className="mx-4 mt-1">{WeightageQ1}%</b>
                                             </div>
                                         </div>
                                         <div className="mt-2">
@@ -395,7 +451,6 @@ const NewFeedbackL1AndL2 = () => {
                                                         '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                                     }}
                                                 />
-                                                <b className="mx-4 mt-1">{WeightageQ2}%</b>
                                             </div>
                                         </div>
                                         <div className="mt-2">
@@ -412,7 +467,6 @@ const NewFeedbackL1AndL2 = () => {
                                                         '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                                     }}
                                                 />
-                                                <b className="mx-4 mt-1">{WeightageQ3}%</b>
                                             </div>
                                         </div>
                                         <div className="mt-2">
@@ -429,10 +483,9 @@ const NewFeedbackL1AndL2 = () => {
                                                         '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                                     }}
                                                 />
-                                                <b className="mx-4 mt-1">{WeightageQ4}%</b>
                                             </div>
                                         </div>
-                                        <div className="mt-3">
+                                        <div className="mt-3" onMouseMove={() => window.scrollBy({ top: 100, behavior: "smooth" })}>
                                             <MuliSelectDropdownField
                                                 onMultiSelect={onMultiSelect}
                                                 value={multiSelectDrop}

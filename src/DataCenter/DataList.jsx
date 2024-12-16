@@ -16,7 +16,43 @@ export const L1L2ReportHeaders = [
     "Quality Rating",
     "Quality Reasons",
 ]
-
+export const L1L2SubmittedHeaders = [
+    "ID",
+    "Image",
+    "DOE",
+    "Store_Code",
+    "Region",
+    "NeedState",
+    "Collection",
+    "CatPB",
+    "ItemCode",
+    "Action",
+    "Activity",
+    "ItGroup",
+    "Category",
+    "Q1Rating",
+    "Q2Rating",
+    "Q3Rating",
+    "Q4Rating",
+    "Specific_Feedback",
+    "Overall(%)",
+]
+export const L1L2PnddHeaders = [
+    "ID",
+    "Image",
+    "itemCode",
+    "Collection",
+    "NeedState",
+    "ItGroup",
+    "Category",
+    "CatPB",
+    "Action",
+    "StdWt",
+    "StdUcp",
+    "Complexity",
+    "Findings",
+    "MetalColor",
+]
 export const WislistLeHeaders = [
     "Image",
     "itemCode",
@@ -68,6 +104,7 @@ export const hitRateColItemCode = ["itemCode", "sealable", "notSealable", "total
 
 // export const feedbackl1l2Navigate = "NpimPortal/feedbackL1andL2";
 export const feedbackl1l2Navigate = "NpimPortal/new/feedbackL1andL2";
+export const L1L2Reports = "NpimPortal/new/reportL1andL2";
 
 export const sizeUCPToKey = {
     Single_Tag: "stdUCP",

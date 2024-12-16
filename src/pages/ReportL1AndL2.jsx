@@ -14,7 +14,6 @@ import { BiHomeAlt } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineBarChart } from "react-icons/ai";
 import Loader from "../Components/Loader";
 import { APIDeleteUpdate, APIGetL1L2Reports, APIGetStatusReports, APIInsertDataL1L2 } from "../HostManager/CommonApiCallL3";
-import NewEditProductL1L2 from "../Components/NewEditProductL1L2";
 
 const useStyles = makeStyles({
   hidden: {
@@ -100,11 +99,12 @@ const ReportL1AndL2 = () => {
   }, [collectionOpt])
 
   useEffect(() => {
-    APIGetStatusReports(`/new/npim/status/L1/${storeCode}`)
+    APIGetStatusReports(`/api/NPIM/l1l2/get/feedback/status?strCode=${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
-            col: response.data.coloum,
+            // col: response.data.coloum,
+            col: ["ID", "NEEDSTATE", "TOTALSKU", "GIVENFEEDBACK", "REMAININGSKUCOUNT"],
             row: response.data.value,
           });
         }
@@ -337,7 +337,7 @@ const ReportL1AndL2 = () => {
       reasons: input.multiSelectDrop.toString(),
       indentLevelType: "L1L2",
     };
-    APIDeleteUpdate(`/npim/update/responses`, UpdateInput)
+    APIDeleteUpdate(`/NPIML3/npim/update/responses`, UpdateInput)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           alert("Data Updated Successfully");
@@ -431,14 +431,13 @@ const ReportL1AndL2 = () => {
       </Grid>
       <Grid item xs={12} className={showInfo ? classes.show : classes.hidden}>
         {productInfo.id && (
-          // <ProductInfo
-          //   productInfo={productInfo}
-          //   getSubmitFormChild={getSubmitFormChild}
-          //   getUpdateFormChild={getUpdateFormChild}
-          //   showInfo={showInfo}
-          //   SelectReport={selectReport}
-          // />
-          <NewEditProductL1L2 productInfo={productInfo} />
+          <ProductInfo
+            productInfo={productInfo}
+            getSubmitFormChild={getSubmitFormChild}
+            getUpdateFormChild={getUpdateFormChild}
+            showInfo={showInfo}
+            SelectReport={selectReport}
+          />
         )}
       </Grid>
       <Grid item xs={12} className="p-3">

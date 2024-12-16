@@ -16,7 +16,7 @@ export const L1L2ProductsInfo = ({ feedShowState }) => {
                             <td className={classes.rowData}>{feedShowState.collection}</td>
                         </tr>
                         <tr>
-                            <th className={classes.hadding}>CONSUMER BASE</th>
+                            <th className={classes.hadding}>NEEDSTATE</th>
                             <td>-</td>
                             <td className={classes.rowData}>
                                 {feedShowState.consumerBase}

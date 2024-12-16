@@ -53,7 +53,7 @@ const AddedCartTable = () => {
 
     const GetItemWiseReports = (storeCode) => {
         setLoading(true);
-        APIGetItemWiseRptL3(`/npim/item/wise/rpt/L3/${storeCode}`)
+        APIGetItemWiseRptL3(`/NPIML3/npim/item/wise/rpt/L3/${storeCode}`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setRows(response.data.value);
@@ -175,7 +175,7 @@ const AddedCartTable = () => {
             exStonequality: event.stoneQuality,
         };
         setLoading(true);
-        APIDeleteUpdate(`/npim/update/responses`, updateRowPayload)
+        APIDeleteUpdate(`/NPIML3/npim/update/responses`, updateRowPayload)
             .then((response) => {
                 if (response.data.code === "1000") {
                     GetItemWiseReports(storeCode);
@@ -191,7 +191,7 @@ const AddedCartTable = () => {
 
     const MoveToWishlist = (event) => {
         setLoading(true);
-        APIMoveToWishList(`/npim/move/item/wishlist/to/indent/${event.itemCode}/${storeCode}/Wishlist`)
+        APIMoveToWishList(`/NPIML3/npim/move/item/wishlist/to/indent/${event.itemCode}/${storeCode}/Wishlist`)
             .then(res => res).then((response) => {
                 if (response.data.Code === "1000") {
                     setAlertPopupStatus({
@@ -207,7 +207,7 @@ const AddedCartTable = () => {
 
     const errorHandling = (storeCode) => {
         setLoading(true);
-        APIUpdateStaus(`/npim/L3/store/status/update/${storeCode}`)
+        APIUpdateStaus(`/NPIML3/npim/L3/store/status/update/${storeCode}`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setAlertPopupStatus({
@@ -223,7 +223,7 @@ const AddedCartTable = () => {
 
     const HandelSendMail = () => {
         setLoading(true);
-        APIMailContentIndent(`/new/npim/L3/mail/content/${storeCode}/Indent`)
+        APIMailContentIndent(`/NPIML3/new/npim/L3/mail/content/${storeCode}/Indent`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     const success = 'Thankyou for completing the Indent Confirmation Process successfully';
@@ -246,7 +246,7 @@ const AddedCartTable = () => {
 
     const handelYes = () => {
         setLoading(true);
-        APIYesItemWiseRtp(`/npim/item/wise/rpt/edr/L3/${storeCode}`, DataRows)
+        APIYesItemWiseRtp(`/NPIML3/npim/item/wise/rpt/edr/L3/${storeCode}`, DataRows)
             .then(res => res).then(response => {
                 if (response.data.code) {
                     GetItemWiseReports(storeCode);

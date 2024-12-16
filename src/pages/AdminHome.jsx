@@ -152,7 +152,7 @@ function AdminHome() {
 
   useEffect(() => {
     if (tabLoginMaster) {
-      APIGetMailerContent(`/fetch/automailer/content/${tabLoginMaster}`)
+      APIGetMailerContent(`/ADMIN/fetch/automailer/content/${tabLoginMaster}`)
         .then(res => res).then(response => {
           if (response.data.code === "1000") {
             setFetchAutoMailer(response.data);
@@ -212,7 +212,7 @@ function AdminHome() {
       });
     } else {
       setLoading(true);
-      APICopyIndentStore(`/npim/store/response/copy/${adminDeskBoardInput.fromStoreCode}/${adminDeskBoardInput.toStoreCode}`)
+      APICopyIndentStore(`/ADMIN/npim/store/response/copy/${adminDeskBoardInput.fromStoreCode}/${adminDeskBoardInput.toStoreCode}`)
         .then((res) => res).then((response) => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -237,10 +237,13 @@ function AdminHome() {
   const UpdatePortalStatus = () => {
     if (adminDeskBoardInput.level && adminDeskBoardInput.status) {
       setLoading(true);
-      APIOpenPortal(`/npim/open/portal`, {
+      const OpenPortalPayload = {
         level: adminDeskBoardInput.level,
         mode: adminDeskBoardInput.status,
-      }).then((response) => {
+      }
+      console.log("OpenPortalPayload==>", OpenPortalPayload);
+      APIOpenPortal(`/ADMIN/npim/open/portal`, OpenPortalPayload).then((response) => {
+        console.log("response==>", response.data);
         if (response.data.code === "1000") {
           setAlertState({
             alertFlag3: true,
@@ -275,7 +278,7 @@ function AdminHome() {
   }
 
   const GetToStoreList = () => {
-    APIGetStoreList(`/npim/to/store/list`)
+    APIGetStoreList(`/ADMIN/npim/to/store/list`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setToStoreList(response.data.value);
@@ -291,7 +294,7 @@ function AdminHome() {
 
   const GetNeedStCatReport = () => {
     setLoading(true);
-    APIGetReportL3(`/npim/summary/report/L3/${adminDeskBoardInput.rtpStore}/${adminDeskBoardInput.rtpType}`)
+    APIGetReportL3(`/NPIML3/npim/summary/report/L3/${adminDeskBoardInput.rtpStore}/${adminDeskBoardInput.rtpType}`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setReportsData({
@@ -315,7 +318,7 @@ function AdminHome() {
   }
 
   const GetStoreList = (fromDate) => {
-    APIGetStoreListFromDate(`/npim/from/store/list/${fromDate}`)
+    APIGetStoreListFromDate(`/ADMIN/npim/from/store/list/${fromDate}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStoreList(response.data.value);
@@ -329,8 +332,6 @@ function AdminHome() {
       }).catch((error) => setLoading(false));
   }
 
-
-
   // UPLOAD FILE DATA
   const uploadFileData = () => {
     if (!masterFile) {
@@ -339,7 +340,7 @@ function AdminHome() {
       setLoading(true);
       let formData = new FormData();
       formData.append("masterFile", masterFile);
-      APIInsSkuMaster(`/npim/insert/sku/master`, formData).then((response) => {
+      APIInsSkuMaster(`/NPIML3/npim/insert/sku/master`, formData).then((response) => {
         if (response.data.code === "1000") {
           setAlertState({
             alertFlag2: true,
@@ -369,7 +370,7 @@ function AdminHome() {
   // GET SKU MASTER DATA
   const GetSKUMasterData = () => {
     setLoading(true);
-    APIGetSkuMaster(`/npim/get/sku/master`)
+    APIGetSkuMaster(`/ADMIN/npim/get/sku/master`)
       .then((res) => res).then((response) => {
         if (response.data.code === "1000") {
           setMasterExcels({
@@ -397,7 +398,7 @@ function AdminHome() {
       alert("Please Select Level");
     } else {
       setLoading(true);
-      APIGetAdminLoginData(`/get/login/data/admin/${labelValue}`)
+      APIGetAdminLoginData(`/ADMIN/get/login/data/admin/${labelValue}`)
         .then((res) => res).then((response) => {
           if (response.data.code === "1000") {
             setAdminLoginData(response.data.value);
@@ -425,7 +426,7 @@ function AdminHome() {
       setLoading(true);
       let formData = new FormData();
       formData.append("masterFile", storeMasterFile);
-      APIInsSkuMaster(`/npim/ins/data/store/master`, formData)
+      APIInsSkuMaster(`/NPIML3/npim/ins/data/store/master`, formData)
         .then(res => res).then((response) => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -463,7 +464,7 @@ function AdminHome() {
       setLoading(true);
       let formData = new FormData();
       formData.append("masterFile", loginMasterFile);
-      APIInsSkuMaster(`/npim/insert/login/master`, formData)
+      APIInsSkuMaster(`/NPIML3/npim/insert/login/master`, formData)
         .then(res => res).then((response) => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -515,7 +516,7 @@ function AdminHome() {
 
   const InsertLoginMaster = () => {
     setLoading(true);
-    APIInsDataLogin(`/ins/data/login/obj`, addedRows)
+    APIInsDataLogin(`/ADMIN/ins/data/login/obj`, addedRows)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setAlertState({
@@ -547,7 +548,7 @@ function AdminHome() {
       setLoading(true);
       let formData = new FormData();
       formData.append("masterFile", sizeMasterFile);
-      APIInsSkuMaster(`/npim/ins/data/size/master`, formData)
+      APIInsSkuMaster(`/NPIML3/npim/ins/data/size/master`, formData)
         .then(res => res).then((response) => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -603,7 +604,7 @@ function AdminHome() {
 
   const InsertSizeMaster = () => {
     setLoading(true);
-    APIInsSizeMaster(`/ins/data/size/master/obj`, addRowSizeMaster)
+    APIInsSizeMaster(`/ADMIN/ins/data/size/master/obj`, addRowSizeMaster)
       .then(res => res).then(responce => {
         if (responce.data.code === "1000") {
           setAlertState({
@@ -633,7 +634,7 @@ function AdminHome() {
         shape: adminDeskBoardInput.shape,
         gender: adminDeskBoardInput.gender,
       }
-      APIUpdateGenderShape(`/update/gender/shape`, UpdateShapPayload)
+      APIUpdateGenderShape(`/ADMIN/update/gender/shape`, UpdateShapPayload)
         .then(res => res).then(response => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -657,7 +658,7 @@ function AdminHome() {
 
   const GetWhishlistData = (storeCode) => {
     setLoading(true);
-    APIGetWishlistData(`/get/wishlisted/listdata/${storeCode}`)
+    APIGetWishlistData(`/NPIML3/get/wishlisted/listdata/${storeCode}`)
       .then((response) => {
         if (response.data.Code === "1000") {
           setWislistData(response.data.value);
@@ -676,7 +677,7 @@ function AdminHome() {
         storeCode: adminDeskBoardInput.toStrCodeWish,
         itemBulk: wishListItems.toString(),
       }
-      APIBulkMoveWhislist(`/bulk/movement/from/wishlist/to/indent`, BulkWishItem)
+      APIBulkMoveWhislist(`/ADMIN/bulk/movement/from/wishlist/to/indent`, BulkWishItem)
         .then(res => res).then(response => {
           if (response.data.code === "1000") {
             setAlertState({
@@ -706,7 +707,7 @@ function AdminHome() {
         reportType: tabLoginMaster
       };
       setLoading(true);
-      APIInsContentMailer(`/npim/insert/auto/mailer/content`, updateAutoMailPayload)
+      APIInsContentMailer(`/ADMIN/npim/insert/auto/mailer/content`, updateAutoMailPayload)
         .then(res => res).then((responce) => {
           if (responce.data.code === "1000") {
             setAlertState({
@@ -791,7 +792,7 @@ function AdminHome() {
 
   const InsertStoreMaster = () => {
     setLoading(true);
-    APIInsObjStoreMaster(`/ins/data/store/master/obj`, uplStoreMaster)
+    APIInsObjStoreMaster(`/ADMIN/ins/data/store/master/obj`, uplStoreMaster)
       .then(res => res).then(responce => {
         if (responce.data.code === "1000") {
           setAlertState({
@@ -1177,7 +1178,7 @@ function AdminHome() {
                                       aria-hidden="true"
                                     />
                                   ) : (
-                                    <span></span>
+                                    <span>UPDATE</span>
                                   )}
                                 </button>
                               </Grid>

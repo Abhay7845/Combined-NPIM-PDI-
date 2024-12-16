@@ -177,7 +177,7 @@ const EditItemWiseProducts = ({ productsData, AlertPopupStatus, ItemWiseReport, 
         };
         console.log("updatePdtPayload==>", updatePdtPayload);
         setLoading(true);
-        APIUpdateFormL3(`/npim/update/responses/from/L3/`, updatePdtPayload)
+        APIUpdateFormL3(`/NPIML3/npim/update/responses/from/L3/`, updatePdtPayload)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     AlertPopupStatus({
@@ -216,7 +216,7 @@ const EditItemWiseProducts = ({ productsData, AlertPopupStatus, ItemWiseReport, 
             exIndCategory: productsData.indCategory,
             exStonequality: productsData.stoneQuality,
         };
-        APIDeleteUpdate(`/npim/update/responses`, CancelIndentPayload)
+        APIDeleteUpdate(`/NPIML3/npim/update/responses`, CancelIndentPayload)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     AlertPopupStatus({

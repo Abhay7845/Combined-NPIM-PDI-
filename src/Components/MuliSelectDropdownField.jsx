@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Style/CssStyle/MuliSelectDropdownField.css";
 import { Multiselect } from "multiselect-react-dropdown";
 
-const MuliSelectDropdownField = ({ onMultiSelect, feedShowState }) => {
+export const MuliSelectDropdownField = ({ onMultiSelect, feedShowState }) => {
   const multiselectRef = useRef();
 
   const resetSelectField = () => {
@@ -63,7 +63,6 @@ const MuliSelectDropdownField = ({ onMultiSelect, feedShowState }) => {
         onRemove={onInternalRemoveChange}
         showCheckbox={true}
         closeOnSelect={true}
-        selectionLimit={3}
         placeholder="Choose Reasons"
         className="searchbox"
         ref={multiselectRef}
@@ -71,12 +70,14 @@ const MuliSelectDropdownField = ({ onMultiSelect, feedShowState }) => {
     </React.Fragment>
   );
 };
+
+
 export const MuliSelectDropdownFieldQualityFeedback = (props) => {
   const multiselectRef = useRef();
 
   useEffect(() => {
     multiselectRef.current.resetSelectedValues();
-  }, [props.feedShowState.itemCode])
+  }, [props.feedShowState.itemCode]);
 
   const ratingReason = [
     "Antique Finish",
@@ -129,4 +130,4 @@ export const MuliSelectDropdownFieldQualityFeedback = (props) => {
     </React.Fragment>
   );
 };
-export default MuliSelectDropdownField;
+

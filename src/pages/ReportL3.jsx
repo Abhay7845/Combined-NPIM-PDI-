@@ -57,7 +57,7 @@ const ReportL3 = () => {
   const handelClose = () => setPopupOpen(false);
 
   const handelYes = () => {
-    APIYesItemWiseRtp(`/npim/item/wise/rpt/edr/L3/${storeCode}`, rows)
+    APIYesItemWiseRtp(`/NPIML3/npim/item/wise/rpt/edr/L3/${storeCode}`, rows)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setPopupOpen(false);
@@ -71,25 +71,25 @@ const ReportL3 = () => {
     let urlReport;
     switch (reportLabel) {
       case "NeedState":
-        urlReport = `/npim/summary/report/L3/${storeCode}/NeedState`;
+        urlReport = `/NPIML3/npim/summary/report/L3/${storeCode}/NeedState`;
         break;
       case "Collection":
-        urlReport = `/npim/summary/report/L3/${storeCode}/Collection`;
+        urlReport = `/NPIML3/npim/summary/report/L3/${storeCode}/Collection`;
         break;
       case "ItGroup":
-        urlReport = `/npim/summary/report/L3/${storeCode}/ItGroup`;
+        urlReport = `/NPIML3/npim/summary/report/L3/${storeCode}/ItGroup`;
         break;
       case "Category":
-        urlReport = `/npim/summary/report/L3/${storeCode}/Category`;
+        urlReport = `/NPIML3/npim/summary/report/L3/${storeCode}/Category`;
         break;
       case "CatPB_Report":
-        urlReport = `/get/catPB/reports/${storeCode}`;
+        urlReport = `/NPIML3/get/catPB/reports/${storeCode}`;
         break;
       case "Cancel_Item_List":
-        urlReport = `/npim/get/item/cancel/list/${storeCode}`;
+        urlReport = `/NPIML3/npim/get/item/cancel/list/${storeCode}`;
         break;
       default:
-        urlReport = `/npim/item/wise/rpt/L3/${storeCode}`;
+        urlReport = `/NPIML3/npim/item/wise/rpt/L3/${storeCode}`;
         break;
     }
     APIGetAllDropdownList(urlReport).then(res => res).then((response) => {
@@ -108,7 +108,7 @@ const ReportL3 = () => {
       setRows([]);
     });
 
-    APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+    APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
@@ -138,7 +138,7 @@ const ReportL3 = () => {
   }
 
   const LoadDataOnWishListing = () => {
-    APIGetItemWiseRptL3(`/npim/item/wise/rpt/L3/${storeCode}`)
+    APIGetItemWiseRptL3(`/NPIML3/npim/item/wise/rpt/L3/${storeCode}`)
       .then((response) => {
         if (response.data.code === "1000") {
           setCol(response.data.coloum);
@@ -201,7 +201,7 @@ const ReportL3 = () => {
       exIndCategory: event.indCategory,
       exStonequality: event.stoneQuality,
     };
-    APIDeleteUpdate(`/npim/update/responses`, inputFiled)
+    APIDeleteUpdate(`/NPIML3/npim/update/responses`, inputFiled)
       .then((response) => {
         if (response.data.code === "1000") {
           setAlertPopupStatus({
@@ -220,7 +220,7 @@ const ReportL3 = () => {
   const MoveToWishlist = (event) => {
     setLoading(true);
     const itemCode = event.itemCode;
-    APIMoveToWishList(`/npim/move/item/wishlist/to/indent/${itemCode}/${storeCode}/Wishlist`)
+    APIMoveToWishList(`/NPIML3/npim/move/item/wishlist/to/indent/${itemCode}/${storeCode}/Wishlist`)
       .then(res => res).then((response) => {
         if (response.data.Code === "1000") {
           setAlertPopupStatus({
@@ -399,7 +399,7 @@ const ReportL3 = () => {
     };
     console.log("updatePdtPayload==>", updatePdtPayload);
     setLoading(true);
-    APIUpdateFormL3(`/npim/update/responses/from/L3`, updatePdtPayload)
+    APIUpdateFormL3(`/NPIML3/npim/update/responses/from/L3`, updatePdtPayload)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           toast.success("Updated Successfully", { theme: "colored" })

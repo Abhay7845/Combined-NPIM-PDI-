@@ -13,7 +13,7 @@ const NPIMHome = () => {
 
     useEffect(() => {
         setLoading(true);
-        APIGetStatusPortal(`/get/portal/status/OPEN`)
+        APIGetStatusPortal(`/NPIM/base/get/portal/status/OPEN`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setPortalDetail(response.data.value);

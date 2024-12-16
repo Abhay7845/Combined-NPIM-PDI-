@@ -53,7 +53,7 @@ const GetProductsHome = () => {
 
     const GetHomeProductsDataForRegion = (region) => {
         setLoading(true);
-        APIGetHomeReligion(`/get/home/page/products/region/${region}`)
+        APIGetHomeReligion(`/NPIM/base/get/home/page/products/region/${region}`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setHomePdtDetailsRegion(response.data.value);
@@ -64,7 +64,7 @@ const GetProductsHome = () => {
 
     const GetHomeProductsDataForAdvariant = (Advariant) => {
         setLoading(true);
-        APIGetForAdvariant(`/get/home/page/products/${Advariant}/""`)
+        APIGetForAdvariant(`/NPIM/base/get/home/page/products/${Advariant}/""`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setHomePdtDetailsAdvariant(response.data.value);
@@ -91,7 +91,7 @@ const GetProductsHome = () => {
 
     const GetStatusReport = (storeCode) => {
         setLoading(true);
-        APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+        APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     setStatusData({
@@ -104,7 +104,7 @@ const GetProductsHome = () => {
     }
 
     const GetCardSttudValue = (storeCode) => {
-        APIGetReportL3(`/npim/summary/report/L3/${storeCode}/StuddedValue`)
+        APIGetReportL3(`/NPIML3/npim/summary/report/L3/${storeCode}/StuddedValue`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setCardStuddData(response.data.value);
@@ -113,7 +113,7 @@ const GetProductsHome = () => {
     }
 
     const GetCardPlainValue = (storeCode) => {
-        APIGetReportL3(`/npim/summary/report/L3/${storeCode}/PlainValue`)
+        APIGetReportL3(`/NPIML3/npim/summary/report/L3/${storeCode}/PlainValue`)
             .then(res => res).then(response => {
                 if (response.data.code === "1000") {
                     setCardPlainData(response.data.value);

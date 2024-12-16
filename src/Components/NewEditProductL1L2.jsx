@@ -7,14 +7,16 @@ import { Grid } from "@material-ui/core";
 import ImgShow from "./ImgShow";
 import { useStyles } from "../Style/ProductInfo";
 import { imageUrl } from "../DataCenter/DataList";
-import MuliSelectDropdownField from "./MuliSelectDropdownField";
 import { toast } from "react-toastify";
-import moment from 'moment';
 import { useParams } from "react-router-dom";
-import { L1L2ProductsInfo } from "./NewComponents/L1L2ProductsInfo";
+import ProductDetailsTabular from "./ProductDetailsTabular";
+import { APIInsertRatingL1L2Feedback } from "../HostManager/CommonApiCallL3";
+import Loader from "./Loader";
+import { MuliSelectDropdownField } from "./MuliSelectDropdownField";
 
-const NewEditProductL1L2 = ({ productInfo }) => {
+const NewEditProductL1L2 = ({ selectReport, productInfo, setProductInfo, GetL1l2PendinRtp, setAlertPopupStatus }) => {
     const classes = useStyles();
+    const [loading, setLoading] = useState(false);
     const { storeCode, rsoName } = useParams();
     const [feedValueQ1, setFeedValueQ1] = useState(0);
     const [feedValueQ2, setFeedValueQ2] = useState(0);
@@ -22,7 +24,6 @@ const NewEditProductL1L2 = ({ productInfo }) => {
     const [feedValueQ4, setFeedValueQ4] = useState(0);
     const [multiSelectDrop, setMultiSelectDrop] = useState([]);
     const [feedbackMsg, setFeedbackMsg] = useState("");
-
     const WeightageQ1 = 4 * Number(feedValueQ1);
     const WeightageQ2 = 7 * Number(feedValueQ2);
     const WeightageQ3 = 7 * Number(feedValueQ3);
@@ -45,50 +46,70 @@ const NewEditProductL1L2 = ({ productInfo }) => {
 
     const onClickSubmitBtnHandler = () => {
         if (feedValueQ1 && feedValueQ2 && feedValueQ3 && feedValueQ4) {
+            setLoading(true);
             const feedbackPayload = {
-                DoE: moment().format("YYYY-MM-DD"),
-                StrCode: storeCode,
-                Region: productInfo.region,
-                Needstate: productInfo.consumerBase,
-                Collection: productInfo.collection,
-                ItGroup: productInfo.itGroup,
-                Category: productInfo.category,
-                CatPB: productInfo.catPB,
-                ItemCode: productInfo.itemCode,
-                Activity: productInfo.activity,
-                Q1_Rating: feedValueQ1,
-                Q2_Rating: feedValueQ2,
-                Q3_Rating: feedValueQ3,
-                Q4_Rating: feedValueQ4,
-                Specific_Feedback: multiSelectValues.toString(),
-                RSOName: rsoName,
-                NpimEventNo: productInfo.npimEventNo,
-                IndentLevelType: "L1L2",
-                SubmitStatus: "feedback",
-                Overall_Product_percentage: WeightageQ1 + WeightageQ2 + WeightageQ3 + WeightageQ4
+                doe: "",
+                strCode: storeCode,
+                region: productInfo.region,
+                needstate: productInfo.consumerBase,
+                collection: productInfo.collection,
+                catPB: productInfo.catPB,
+                itemCode: productInfo.itemCode,
+                activity: productInfo.activity,
+                itgroup: productInfo.itGroup,
+                category: productInfo.category,
+                q1_Rating: feedValueQ1,
+                q2_Rating: feedValueQ2,
+                q3_Rating: feedValueQ3,
+                q4_Rating: feedValueQ4,
+                specificFeedback: multiSelectValues.toString(),
+                rsoName: rsoName,
+                npimEventNo: productInfo.npimEventNo,
+                indentLevelType: "L1L2",
+                submitStatus: "feedback",
+                overallProductPercentage: WeightageQ1 + WeightageQ2 + WeightageQ3 + WeightageQ4,
             }
             console.log("feedbackPayload==>", feedbackPayload);
+            const updateAndEditUrl = selectReport === "submitted" ? "/api/NPIM/l1l2/update/response/l1l2" : "/api/NPIM/l1l2/insert/response/l1l2";
+            APIInsertRatingL1L2Feedback(updateAndEditUrl, feedbackPayload)
+                .then(res => res).then(response => {
+                    console.log("response==>", response.data);
+                    if (response.data.code === "1000") {
+                        setProductInfo({});
+                        setAlertPopupStatus({
+                            status: true,
+                            main: selectReport === "submitted" ? "Updated Successfully" : "Inserted Successfully",
+                            contain: "",
+                            mode: true,
+                        });
+                        GetL1l2PendinRtp(storeCode);
+                    } else if (response.data.value === "1001") {
+                        toast.info("Something Wrong", { theme: "colored" });
+                    }
+                    setLoading(false);
+                }).catch(err => setLoading(false));
         } else {
-            toast.error("Please Insure All The Questions Are Answered", { theme: "colored" })
+            toast.error("Please Insure All The Questions Are Answered", { theme: "colored" });
         }
     };
 
     return (
         <React.Fragment>
+            {loading === true && <Loader />}
             <Grid container style={{ marginTop: "2%" }}>
                 <div className="col-md-5">
                     <ImgShow
-                        itemCode={productInfo.itemCode}
+                        itemCode={productInfo.itemCode || ""}
                         videoLink=""
                         imgLink={imageUrl}
                     />
                 </div>
                 <Divider />
-                <div className="col-md-7">
+                <div className="col-md-7 p-1" style={{ boxShadow: "0 4px 8px 0 #00000033, 0 6px 20px 0 #00000030" }}>
                     <Typography className={classes.headingColor} align="center">{productInfo.itemCode}</Typography>
                     <div className="row my-3">
                         <div className="col-md-5">
-                            <L1L2ProductsInfo feedShowState={productInfo} />
+                            <ProductDetailsTabular information={productInfo} />
                         </div>
                         <div className="col-md-7">
                             <h5 className="text-center"><b>FEEDBACK</b></h5>
@@ -107,7 +128,6 @@ const NewEditProductL1L2 = ({ productInfo }) => {
                                                 '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                             }}
                                         />
-                                        <b className="mx-4 mt-1">{WeightageQ1}%</b>
                                     </div>
                                 </div>
                                 <div className="mt-2">
@@ -124,7 +144,6 @@ const NewEditProductL1L2 = ({ productInfo }) => {
                                                 '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                             }}
                                         />
-                                        <b className="mx-4 mt-1">{WeightageQ2}%</b>
                                     </div>
                                 </div>
                                 <div className="mt-2">
@@ -141,7 +160,6 @@ const NewEditProductL1L2 = ({ productInfo }) => {
                                                 '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                             }}
                                         />
-                                        <b className="mx-4 mt-1">{WeightageQ3}%</b>
                                     </div>
                                 </div>
                                 <div className="mt-2">
@@ -158,7 +176,6 @@ const NewEditProductL1L2 = ({ productInfo }) => {
                                                 '& .MuiRating-iconEmpty': { color: 'gray' } // Empty stars (optional)
                                             }}
                                         />
-                                        <b className="mx-4 mt-1">{WeightageQ4}%</b>
                                     </div>
                                 </div>
                                 <div className="mt-3">

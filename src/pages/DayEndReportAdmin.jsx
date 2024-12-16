@@ -59,7 +59,7 @@ const DayEndReportAdmin = () => {
 
   function endDayReportCall(inputData) {
     if (endDayReportInput.level === "Wishist_Report") {
-      APIGetWishEndDayRtp(`/wishlist/end/day/report/${inputData}`).then((response) => {
+      APIGetWishEndDayRtp(`/NPIML3/wishlist/end/day/report/${inputData}`).then((response) => {
         console.log("response==>", response.data);
         if (response.data.code === "1000") {
           setEndDayReport({
@@ -75,10 +75,10 @@ const DayEndReportAdmin = () => {
       let urlReport;
       switch (endDayReportInput.level) {
         case "L1/L2":
-          urlReport = `/end/day/report/${inputData}`
+          urlReport = `/ADMIN/end/day/report/${inputData}`
           break;
         case "L3":
-          urlReport = `/end/day/report/${inputData}`
+          urlReport = `/ADMIN/end/day/report/${inputData}`
           break;
         default:
           break;
@@ -133,7 +133,7 @@ const DayEndReportAdmin = () => {
   //API CALLING
   const getParameterData = (parameter) => {
     setLoading(true);
-    APIAdminGetParameter(`/npim/scanned/report/L1/hit/rates/${parameter}`)
+    APIAdminGetParameter(`/ADMIN/npim/scanned/report/L1/hit/rates/${parameter}`)
       .then((res) => res).then((result) => {
         if (result.data.code === "1000") {
           setParameterData({

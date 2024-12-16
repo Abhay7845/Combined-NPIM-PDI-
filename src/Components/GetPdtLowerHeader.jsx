@@ -19,7 +19,7 @@ const GetPdtLowerHeader = () => {
     const loginData = JSON.parse(sessionStorage.getItem("loginData"));
 
     const GetStatusReport = (storeCode) => {
-        APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+        APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
             .then(res => res).then((response) => {
                 if (response.data.code === "1000") {
                     setStatusData({

@@ -53,7 +53,7 @@ const WishListedItems = () => {
   const handelClose = () => setPopupOpen(false);
 
   const handelYes = () => {
-    APIInsWishList(`/get/wishlisted/listdata/${storeCode}`, rows)
+    APIInsWishList(`/NPIML3/get/wishlisted/listdata/${storeCode}`, rows)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           setPopupOpen(false);
@@ -64,19 +64,19 @@ const WishListedItems = () => {
 
   const GetWhishlistData = (storeCode) => {
     setLoading(true);
-    APIGetWishlistData(`/get/wishlisted/listdata/${storeCode}`)
+    APIGetWishlistData(`/NPIML3/get/wishlisted/listdata/${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.Code === "1000") {
           setCol(WislistLeHeaders);
           setRows(response.data.value);
-        }
+        } npim / move / item / wishlist / to / indent
         setSwitchEnable(true);
         setLoading(false);
       }).catch((error) => setLoading(false));
   }
   useEffect(() => {
     GetWhishlistData(storeCode);
-    APIGetStatuL3(`/npim/get/status/L3/${storeCode}`)
+    APIGetStatuL3(`/NPIML3/npim/get/status/L3/${storeCode}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStatusData({
@@ -89,7 +89,7 @@ const WishListedItems = () => {
   }, [statusCloserOpener, reportLabel, modification, popupOpen, storeCode]);
 
   const LoadDataOnWishListing = (storeCode) => {
-    APIGetWishlistData(`/get/wishlisted/listdata/${storeCode}`)
+    APIGetWishlistData(`/NPIML3/get/wishlisted/listdata/${storeCode}`)
       .then((response) => {
         if (response.data.Code === "1000") {
           setCol(response.data.coloum);
@@ -102,7 +102,7 @@ const WishListedItems = () => {
 
   const WishListToEndent = (itemCode, setWishListRowData) => {
     setLoading(true);
-    APIMoveToIndent(`/npim/move/item/wishlist/to/indent/${itemCode}/${storeCode}/Indent`)
+    APIMoveToIndent(`/NPIML3/npim/move/item/wishlist/to/indent/${itemCode}/${storeCode}/Indent`)
       .then(res => res).then((response) => {
         if (response.data.Code === "1000") {
           setAlertPopupStatus({
@@ -138,7 +138,7 @@ const WishListedItems = () => {
   }
 
   function getCatPBLimit(catPB, itemCode, setWishListRowData) {
-    APIGetCatPBStoreWise(`/get/catPB/limit/storewise/${storeCode}/${catPB}`)
+    APIGetCatPBStoreWise(`/NPIM/base/get/catPB/limit/storewise/${storeCode}/${catPB}`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           indentCall(response.data.value, itemCode, setWishListRowData);
@@ -161,7 +161,7 @@ const WishListedItems = () => {
   const InsertIntoLimitTable = (catPB, itemCode, setWishListRowData) => {
     if (catPB && itemCode) {
       setLoading(true);
-      APIInsLimit(`/ins/limit/table/${storeCode}/${catPB ? catPB : "1"}`)
+      APIInsLimit(`/NPIML3/ins/limit/table/${storeCode}/${catPB ? catPB : "1"}`)
         .then((response) => {
           if (response.data.Code === "1000") {
             if (response.data.value.toUpperCase() === "SUCCESS") {
@@ -245,7 +245,7 @@ const WishListedItems = () => {
       exIndCategory: event.indCategory,
       exStonequality: event.stoneQuality,
     };
-    APIDeleteUpdate(`/npim/update/responses`, inputFiled)
+    APIDeleteUpdate(`/NPIML3/npim/update/responses`, inputFiled)
       .then((response) => {
         if (response.data.code === "1000") {
           setAlertPopupStatus({

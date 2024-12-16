@@ -6,7 +6,7 @@ import { Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import ImgShow from "./ImgShow";
-import MuliSelectDropdownField, { MuliSelectDropdownFieldQualityFeedback } from "./MuliSelectDropdownField";
+import { MuliSelectDropdownField, MuliSelectDropdownFieldQualityFeedback } from "./MuliSelectDropdownField";
 import { useStyles } from "../Style/ProductInfo";
 import { imageUrl } from "../DataCenter/DataList";
 import { L1L2ProductsInfo } from "./NewComponents/L1L2ProductsInfo";

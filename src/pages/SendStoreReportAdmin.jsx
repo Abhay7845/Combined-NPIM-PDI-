@@ -76,7 +76,7 @@ function SendStoreReportAdmin() {
 
   useEffect(() => {
     if (tabularData) {
-      APIGetMailerContent(`/fetch/automailer/content/${tabularData}`)
+      APIGetMailerContent(`/ADMIN/fetch/automailer/content/${tabularData}`)
         .then(res => res).then(response => {
           if (response.data.code === "1000") {
             setFetchAutoMailer(response.data);
@@ -100,7 +100,7 @@ function SendStoreReportAdmin() {
         reportType: tabularData
       };
       setLoading(true);
-      APIInsContentMailer(`/npim/insert/auto/mailer/content`, updateAutoMailPayload)
+      APIInsContentMailer(`/ADMIN/npim/insert/auto/mailer/content`, updateAutoMailPayload)
         .then(res => res).then((responce) => {
           if (responce.data.code === "1000") {
             setAlertState({
@@ -146,7 +146,7 @@ function SendStoreReportAdmin() {
           storeCode: data.storeCode
         }
       })
-      APISendMail(`/npim/send/mail`, sendReportPaylod)
+      APISendMail(`/ADMIN/npim/send/mail`, sendReportPaylod)
         .then(res => res).then((responce) => {
           if (responce.data.code === "1000") {
             let notSent = responce.data.notSent[0] && `But fro this stores not send mail plz check mail content and mail Ids ${responce.data.notSent}`;
@@ -185,7 +185,7 @@ function SendStoreReportAdmin() {
 
   const GetStoreCode = (fromDate) => {
     setLoading(true);
-    APIGetStoreListFromDate(`/npim/from/store/list/${fromDate}`)
+    APIGetStoreListFromDate(`/ADMIN/npim/from/store/list/${fromDate}`)
       .then(res => res).then((response) => {
         if (response.data.code === "1000") {
           setStoreList(response.data.value)
@@ -207,7 +207,7 @@ function SendStoreReportAdmin() {
     }
     if (sendReportInput.to && sendReportInput.cc) {
       setLoading(true);
-      APISendTestMail(`/npim/test/send/mail`, testMailPaylod)
+      APISendTestMail(`/ADMIN/npim/test/send/mail`, testMailPaylod)
         .then(res => res).then((responce) => {
           if (responce.data.code === "1000") {
             setAlertState({

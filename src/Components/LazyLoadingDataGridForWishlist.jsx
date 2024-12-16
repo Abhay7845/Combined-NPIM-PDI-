@@ -219,7 +219,7 @@ const LazyloadingDataGridForWishlist = (props) => {
   };
 
   const ErrorHandlingMail = () => {
-    APIUpdateStaus(`/npim/L3/store/status/update/${storeCode}`)
+    APIUpdateStaus(`/NPIML3/npim/L3/store/status/update/${storeCode}`)
       .then(res => res).then(response => {
         if (response.data.code === "1000") {
           handelSendMail(storeCode);

@@ -71,7 +71,7 @@ const Login = ({ open, setOpen }) => {
           setErrorSms("Please Enter valid Username and Password!");
         });
     } else {
-      APILogin(`/npim/user/login`, inputPayloadData)
+      APILogin(`/NPIM/base/npim/user/login`, inputPayloadData)
         .then(res => res).then((response) => {
           sessionStorage.setItem("rsoName", inputPayloadData.region);
           sessionStorage.setItem("store_value", response.data.value.role);

@@ -38,6 +38,7 @@ import LoginCredentials from "./IndentExpress/Admin/LoginCredentials";
 import DayEndReport from "./IndentExpress/Admin/DayEndReport";
 import UpdateAutomail from "./IndentExpress/Admin/UpdateAutomail";
 import NewFeedbackL1AndL2 from "./pages/NewFeedbackL1AndL2";
+import NewReportL1AndL2 from "./pages/NewReportL1AndL2";
 
 function App() {
   return (
@@ -79,6 +80,10 @@ function App() {
             <Route
               path="/NpimPortal/reportL1andL2/:storeCode/:rsoName"
               element={<ReportL1AndL2 />}
+            />
+            <Route
+              path="/NpimPortal/new/reportL1andL2/:storeCode/:rsoName"
+              element={<NewReportL1AndL2 />}
             />
             <Route
               path="/NpimPortal/indentL3Digital/:storeCode/:rsoName"
