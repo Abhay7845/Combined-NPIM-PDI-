@@ -361,7 +361,7 @@ const ReportL3 = () => {
   ];
 
   const UpdateReportsPdtDetails = () => {
-    const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING', "Only_NECKWEAR"];
+    const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING'];
     const filteredTags = allDataFromValidation.tegQuantityRes.filter(item => !itemsToExclude.includes(item.size));
     const updatePdtPayload = {
       itemCode: dataRowInformation.itemCode,

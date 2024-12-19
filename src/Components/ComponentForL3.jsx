@@ -232,50 +232,50 @@ function SmallDataTable(props) {
               {props.childNodeF &&
                 <tr>
                   <td>FINGER RING</td>
-                  <td>{parseFloat(props.stdWtF).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpF).toFixed(3)}</td>
+                  {props.stdWtF && <td>{parseFloat(props.stdWtF).toFixed(3)}</td>}
+                  {props.stdUcpF && <td>{parseFloat(props.stdUcpF).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodesE &&
                 <tr>
                   <td>EAR RING</td>
-                  <td>{parseFloat(props.stdWtE).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpE).toFixed(3)}</td>
+                  {props.stdWtE && <td>{parseFloat(props.stdWtE).toFixed(3)}</td>}
+                  {props.stdUcpE && <td>{parseFloat(props.stdUcpE).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodesN &&
                 <tr>
                   <td>NECKWEAR</td>
-                  <td>{parseFloat(props.stdWtN).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpN).toFixed(3)}</td>
+                  {props.stdWtN && <td>{parseFloat(props.stdWtN).toFixed(3)}</td>}
+                  {props.stdUcpN && <td>{parseFloat(props.stdUcpN).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodeH &&
                 <tr>
                   <td>HARAM</td>
-                  <td>{parseFloat(props.stdWtH).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpH).toFixed(3)}</td>
+                  {props.stdWtH && <td>{parseFloat(props.stdWtH).toFixed(3)}</td>}
+                  {props.stdUcpH && <td>{parseFloat(props.stdUcpH).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodeK &&
                 <tr>
                   <td>TIKKA</td>
-                  <td>{parseFloat(props.stdWtK).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpK).toFixed(3)}</td>
+                  {props.stdWtK && <td>{parseFloat(props.stdWtK).toFixed(3)}</td>}
+                  {props.stdUcpK && <td>{parseFloat(props.stdUcpK).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodeV &&
                 <tr>
                   <td>BANGLE</td>
-                  <td>{parseFloat(props.stdWtV).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpV).toFixed(3)}</td>
+                  {props.stdWtV && <td>{parseFloat(props.stdWtV).toFixed(3)}</td>}
+                  {props.stdUcpV && <td>{parseFloat(props.stdUcpV).toFixed(3)}</td>}
                 </tr>
               }
               {props.childNodeO &&
                 <tr>
                   <td>OTHER</td>
-                  <td>{parseFloat(props.stdWtO).toFixed(3)}</td>
-                  <td>{parseFloat(props.stdUcpO).toFixed(3)}</td>
+                  {props.stdWtO && <td>{parseFloat(props.stdWtO).toFixed(3)}</td>}
+                  {props.stdUcpO && <td>{parseFloat(props.stdUcpO).toFixed(3)}</td>}
                 </tr>
               }
             </tbody>

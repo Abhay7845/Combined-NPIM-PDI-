@@ -138,7 +138,7 @@ const EditItemWiseProducts = ({ productsData, AlertPopupStatus, ItemWiseReport, 
     }, [productsData.itemCode, productsData.id]);
 
     const UpdateReportsPdtDetails = () => {
-        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING', "Only_NECKWEAR"];
+        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING'];
         const filteredTags = allDataFromValidation.tegQuantityRes.filter(item => !itemsToExclude.includes(item.size));
 
         const updatePdtPayload = {

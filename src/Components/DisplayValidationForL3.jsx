@@ -25,8 +25,11 @@ export default function DisplayValidationComponent(props) {
     const earing = !feedShowState.childNodesE ? "" : "Only_EARRING";
     const neckwear = !feedShowState.childNodesN ? "" : "Only_NECKWEAR";
 
-    const set2tag = digit === "0" || digit === "1" || digit === "2" ? "" : "Set2Tag";
+    let set2tag = digit === "0" || digit === "1" || digit === "2" ? "" : "Set2Tag";
     const set2Tag_H = digit === "0" || digit === "1" || digit === "2" ? "" : "Set2Tag_H";
+    if (feedShowState.activity.toUpperCase() === "STUDDED" || feedShowState.activity === "") {
+        set2tag = "";
+    }
     const optionForOtherAllSet = [
         "Single_Tag",
         // "Separate_Tag",
@@ -175,7 +178,7 @@ export default function DisplayValidationComponent(props) {
                 />
             )}
 
-            {digit === "B" || digit === "C" || digit === "R" || digit === "N" ? (
+            {digit === "B" || digit === "C" || digit === "R" ? (
                 <MultipuleSelectSizable
                     labelName="Size/Quantity"
                     optionsList={SizeState}
@@ -197,6 +200,7 @@ export default function DisplayValidationComponent(props) {
                 digit === "W" ||
                 digit === "E" ||
                 digit === "A" ||
+                digit === "N" ||
                 digit === "K" ? (
                 <React.Fragment>
                     <InputFieldMaterialUI

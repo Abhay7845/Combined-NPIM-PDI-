@@ -99,7 +99,7 @@ const MultipleSelectTagDropdown = ({
 
             {selectedOptions.map((option, i) => (
                 <div key={i}>
-                    {option.name === "Only_FINGERRING" || option.name === "Only_BANGLE" || option.name === "Only_NECKWEAR" || option.name === "Only_MANGALSUTRA" ? "" : <input
+                    {option.name === "Only_FINGERRING" || option.name === "Only_BANGLE" || option.name === "Only_MANGALSUTRA" ? "" : <input
                         type="number"
                         value={optionInputs[option.name] || ''}
                         onChange={(e) => HandleInputChange(option.name, e.target.value)}
@@ -108,13 +108,6 @@ const MultipleSelectTagDropdown = ({
                     />}
                 </div>
             ))}
-
-            {selectedTagArray.includes("Only_NECKWEAR") &&
-                <MultipuleSelectSizable
-                    optionsList={ChildNodeN}
-                    onChangeHandler={sizeQuantityResHandler}
-                    CategoryData={CategoryData}
-                />}
 
             {selectedTagArray.includes("Only_FINGERRING") &&
                 <MultipuleSelectSizable
@@ -152,8 +145,6 @@ const MultipleSelectTagDropdown = ({
                     optionsList={findingsOptions}
                     CategoryData={CategoryData}
                 />}
-
-
         </React.Fragment>)
 }
 export default MultipleSelectTagDropdown;

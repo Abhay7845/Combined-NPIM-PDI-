@@ -2,7 +2,7 @@ import React from "react";
 
 const StaticTabularInformation = (props) => {
   return (
-    <table className="table table-bordered text-center" style={{ backgroundColor: "#8b89898d", fontWeight: "bold" }}>
+    <table className="table table-bordered text-center">
       <thead>
         <tr>
           {props.vsGh && <th>VS_GH</th>}

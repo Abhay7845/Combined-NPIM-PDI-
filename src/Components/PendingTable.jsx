@@ -95,7 +95,7 @@ const PendingTable = (props) => {
                                         <TableCell align="center">{row.needstate}</TableCell>
                                         <TableCell align="center">{row.itgroup}</TableCell>
                                         <TableCell align="center">{row.category}</TableCell>
-                                        <TableCell align="center">{row.catPB}</TableCell>
+                                        <TableCell align="center">{row.catPB || "N/A"}</TableCell>
                                         <TableCell className="text-center bg-secondary"><EditIcon onClick={() => onEditChange(row)} cursor="pointer" /></TableCell>
                                         <TableCell align="center">{row.stdWt}</TableCell>
                                         <TableCell align="center">{row.stdUCP}</TableCell>

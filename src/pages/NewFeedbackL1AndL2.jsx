@@ -294,6 +294,7 @@ const NewFeedbackL1AndL2 = () => {
         setLoading(false);
         SetResetDrop(true);
     }
+
     const onClickSubmitBtnHandler = () => {
         if (feedValueQ1 && feedValueQ2 && feedValueQ3 && feedValueQ4) {
             const feedbackPayload = {
@@ -374,10 +375,7 @@ const NewFeedbackL1AndL2 = () => {
                 closeHandler={() => alertPopupStatus.mode ? closeHandlerForRest() : closeHandler()}
             />
             <Grid item xs={12}>
-                <UpperHeader
-                    itemCode={feedShowState.itemCode}
-                    storeCode={feedShowState.strCode}
-                />
+                <UpperHeader itemCode={feedShowState.itemCode} storeCode={feedShowState.strCode} />
                 <Loading flag={loading} />
                 {loading === true && <Loader />}
                 {sessionStorage.getItem("Npim-type") === "DNPIM" ?

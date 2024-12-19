@@ -426,7 +426,7 @@ const IndentL3 = () => {
     }
 
     const IndentYourProduct = (Indent) => {
-        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING', "Only_NECKWEAR"];
+        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING'];
         const filteredTags = allDataFromValidation.tegQuantityRes.filter(item => !itemsToExclude.includes(item.size));
 
         const IndentPdtPayload = {
@@ -587,7 +587,7 @@ const IndentL3 = () => {
     }
 
     const onClickSubmitBtnHandler = (value) => {
-        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING', "Only_NECKWEAR"];
+        const itemsToExclude = ['Only_MANGALSUTRA', 'Only_BANGLE', 'Only_FINGERRING'];
         const filteredTags = allDataFromValidation.tegQuantityRes.filter(item => !itemsToExclude.includes(item.size));
         const SelectedTag = allDataFromValidation.tegQuantityRes.map(item => item.size);
 
@@ -639,13 +639,7 @@ const IndentL3 = () => {
         const SizeQuantitySum = QuantitySum(allDataFromValidation.sizeQuantityRes);
         const UmoSizeLimit = QuantitySum(sizeUomQuantityPrise);
         console.log("UmoSizeLimit==>", UmoSizeLimit);
-
-        let sizeLimit = 0;
-        if (SelectedTag.includes("Only_FINGERRING")) {
-            sizeLimit = SizeQuantitySum * Number(feedShowState.stdUcpF);
-        } else if (SelectedTag.includes("Only_NECKWEAR")) {
-            sizeLimit = SizeQuantitySum * Number(feedShowState.stdUcpN);
-        }
+        const sizeLimit = SizeQuantitySum * Number(feedShowState.stdUcpF)
         console.log("sizeLimit==>", sizeLimit);
 
         const TotalLimit = tagSizeLimit + sizeLimit + UmoSizeLimit + Number(allDataFromValidation.quantityRes);

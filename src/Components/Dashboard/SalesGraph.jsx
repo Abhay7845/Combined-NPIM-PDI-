@@ -6,7 +6,6 @@ import { BsCloudDownload } from "react-icons/bs";
 
 const SalesGraph = ({ data, headerName }) => {
     const chartContainerRef = useRef(null);
-    console.log("data==>", data);
 
     // const data = [
     //     { date: "Oct 1", sales: 0 },

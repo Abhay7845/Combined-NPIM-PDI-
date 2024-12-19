@@ -83,7 +83,7 @@ const NewEditProductL1L2 = ({ selectReport, productInfo, setProductInfo, GetL1l2
                             mode: true,
                         });
                         GetL1l2PendinRtp(storeCode);
-                    } else if (response.data.value === "1001") {
+                    } else if (response.data.code === "1001") {
                         toast.info("Something Wrong", { theme: "colored" });
                     }
                     setLoading(false);
@@ -199,7 +199,7 @@ const NewEditProductL1L2 = ({ selectReport, productInfo, setProductInfo, GetL1l2
                             fullWidth
                             className={classes.buttonStyle}
                         >
-                            Update
+                            {selectReport === "submitted" ? " UPDATE" : "INSERT"}
                         </Button>
                     </div>
                 </div>

@@ -39,6 +39,7 @@ import DayEndReport from "./IndentExpress/Admin/DayEndReport";
 import UpdateAutomail from "./IndentExpress/Admin/UpdateAutomail";
 import NewFeedbackL1AndL2 from "./pages/NewFeedbackL1AndL2";
 import NewReportL1AndL2 from "./pages/NewReportL1AndL2";
+import DayEndDayReportsAdminL1L2 from "./pages/DayEndDayReportsAdminL1L2";
 
 function App() {
   return (
@@ -108,6 +109,10 @@ function App() {
             <Route
               path="/NpimPortal/dayEndReportForAdmin/:storeCode/:rsoName"
               element={<DayEndReportAdmin />}
+            />
+            <Route
+              path="/NpimPortal/dayEndReportForAdmin/L1L2/:storeCode/:rsoName"
+              element={<DayEndDayReportsAdminL1L2 />}
             />
             <Route
               path="/NpimPortal/SendStoreReportAdmin/:storeCode/:rsoName"

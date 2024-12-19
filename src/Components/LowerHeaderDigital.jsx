@@ -11,6 +11,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineBarChart } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { APIGetDropdownCollectionList, APIGetDropdownConsumerBaseList, APIGetDropdownITGroupList, APIGetDropdownList } from "../HostManager/CommonApiCallL3";
+import StatusTabularL1L2 from "./StatusTabularL1L2";
 
 const LowerHeaderDigital = (props) => {
     const classes = useStyles();
@@ -145,7 +146,7 @@ const LowerHeaderDigital = (props) => {
         <React.Fragment>
             <Loading flag={loading} />
             <Drawer anchor="top" open={statusCloserOpener} onClick={statusOpener}>
-                <StatusTabular statusData={props.statusData} />
+                {loginData.role === "L3" ? <StatusTabular statusData={props.statusData} /> : <StatusTabularL1L2 statusData={props.statusData} />}
             </Drawer>
             <section className="lower_header_show">
                 <div className={classes.root}>

@@ -20,12 +20,15 @@ const NewReportL1AndL2 = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [pndReports, setPndReports] = useState([]);
+    const [collectionRtp, setCollectionRtp] = useState([]);
     const [productInfo, setProductInfo] = useState({});
     const [selectReport, setSelectReport] = useState("submitted");
+    const [collectionOpt, setCollectionOpt] = useState("");
     const [statusData, setStatusData] = useState({
         col: [],
         row: [],
     });
+    console.log("collectionRtp==>", collectionRtp);
     const [alertPopupStatus, setAlertPopupStatus] = useState({
         status: false,
         main: "",
@@ -35,6 +38,8 @@ const NewReportL1AndL2 = () => {
     const [statusCloserOpener, setStatusCloserOpener] = useState(false);
     const selectReportList = ["yet to submit", "submitted"];
     const loginData = JSON.parse(sessionStorage.getItem("loginData"));
+    const collType = pndReports.map(item => item.collection.split(/\s+/).join(''));
+    const collectionFilter = ["", ...new Set(collType)];
 
     function CloseHandler() {
         setAlertPopupStatus({
@@ -53,6 +58,7 @@ const NewReportL1AndL2 = () => {
             mode: false,
         });
     }
+
     const GetL1l2PendinRtp = (storeCode) => {
         let statusUrl = "";
         switch (selectReport) {
@@ -73,12 +79,19 @@ const NewReportL1AndL2 = () => {
                 }
                 setLoading(false);
                 setProductInfo({});
+                setCollectionRtp([]);
+                setCollectionOpt("");
             }).catch(err => setLoading(false));
     }
 
     useEffect(() => {
         GetL1l2PendinRtp(storeCode);
     }, [storeCode, selectReport]);
+
+    useEffect(() => {
+        const CollFilter = pndReports.filter(item => item.collection && item.collection.split(/\s+/).join('').trim() === collectionOpt);
+        setCollectionRtp(CollFilter);
+    }, [collectionOpt]);
 
     useEffect(() => {
         APIGetStatusReports(`/api/NPIM/l1l2/get/feedback/status?strCode=${storeCode}`)
@@ -103,7 +116,6 @@ const NewReportL1AndL2 = () => {
             category: "ALL",
             itemCode: data.itemCode,
         }
-        console.log("getItemByCardDataNpim==>", getItemByCardDataNpim);
         setLoading(true);
         APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, getItemByCardDataNpim)
             .then(res => res).then(response => {
@@ -155,6 +167,16 @@ const NewReportL1AndL2 = () => {
                                     dropList={selectReportList}
                                     myChangeHandler={(e) => setSelectReport(e.target.value)}
                                 />
+                                {collectionFilter.length > 2 && <DropdownField
+                                    name="Select Report Type"
+                                    labelName="Collection"
+                                    dropList={collectionFilter}
+                                    value={collectionOpt}
+                                    myChangeHandler={(e) => {
+                                        setCollectionOpt(e.target.value.split(/\s+/).join(' ').trim());
+                                        setProductInfo({});
+                                    }}
+                                />}
                             </div>
                             <div className="d-flex">
                                 <div className="IconsStyle" onClick={() => {
@@ -192,7 +214,7 @@ const NewReportL1AndL2 = () => {
             <Grid item xs={12} className="p-3">
                 {pndReports.length > 0 ? (
                     <PendingTable
-                        report={pndReports}
+                        report={collectionRtp.length > 0 ? collectionRtp : pndReports}
                         coloum={selectReport === "submitted" ? L1L2SubmittedHeaders : L1L2PnddHeaders}
                         reportType={selectReport}
                         getProductData={getProductData}

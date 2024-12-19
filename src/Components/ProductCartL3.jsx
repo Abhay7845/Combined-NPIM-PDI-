@@ -92,7 +92,7 @@ export const ProductCartL3 = () => {
         setLoading(true);
         const collectionVal = collectionValue ? collectionValue : collval;
         const categoryVal = categoryValue ? categoryValue : catVal;
-        APIGetCollCatListL3(`/item/list/dnpim/?storecode=${storeCode}&collection=${collectionVal}&category=${categoryVal}`)
+        APIGetCollCatListL3(`/NPIML3/item/list/dnpim/?storecode=${storeCode}&collection=${collectionVal}&category=${categoryVal}`)
             .then(res => res).then(response => {
                 if (response.data.Code === "1000") {
                     setCartDataList(response.data.value);
@@ -117,6 +117,7 @@ export const ProductCartL3 = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
     return (
         <React.Fragment>
             {loading === true && <Loader />}

@@ -14,6 +14,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { AiOutlineHeart, AiOutlineBarChart } from "react-icons/ai";
 import Loader from "../Components/Loader";
 import { APIDeleteUpdate, APIGetL1L2Reports, APIGetStatusReports, APIInsertDataL1L2 } from "../HostManager/CommonApiCallL3";
+import StatusTabularL1L2 from "../Components/StatusTabularL1L2";
 
 const useStyles = makeStyles({
   hidden: {
@@ -364,7 +365,7 @@ const ReportL1AndL2 = () => {
     <React.Fragment>
       {loading === true && <Loader />}
       <Drawer anchor="top" open={statusCloserOpener} onClick={statusOpener}>
-        <StatusTabular statusData={statusData} />
+        {loginData.role === "L3" ? <StatusTabular statusData={statusData} /> : <StatusTabularL1L2 statusData={statusData} />}
       </Drawer>
       <Grid item xs={12}>
         <UpperHeader storeCode={storeCode} />

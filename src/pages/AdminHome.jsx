@@ -148,6 +148,12 @@ function AdminHome() {
       link: `/NpimPortal/SendStoreReportAdmin/${storeCode}/${rsoName}`,
       icon: "SendIcon",
     },
+    {
+      id: 5,
+      name: "L1L2 End Day Reports",
+      link: `/NpimPortal/dayEndReportForAdmin/L1L2/${storeCode}/${rsoName}`,
+      icon: "SendIcon",
+    },
   ];
 
   useEffect(() => {
@@ -241,7 +247,6 @@ function AdminHome() {
         level: adminDeskBoardInput.level,
         mode: adminDeskBoardInput.status,
       }
-      console.log("OpenPortalPayload==>", OpenPortalPayload);
       APIOpenPortal(`/ADMIN/npim/open/portal`, OpenPortalPayload).then((response) => {
         console.log("response==>", response.data);
         if (response.data.code === "1000") {
