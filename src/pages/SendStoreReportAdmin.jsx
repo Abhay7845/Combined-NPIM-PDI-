@@ -123,7 +123,7 @@ function SendStoreReportAdmin() {
               to: "",
               cc: "",
             })
-            setTabularData("")
+            setTabularData("");
           } else {
             setAlertState({
               alertFlag1: true,
@@ -170,7 +170,7 @@ function SendStoreReportAdmin() {
               to: "",
               cc: "",
             })
-            setStoreList([])
+            setStoreList([]);
           } else {
             setAlertState({
               lertFlag2: false,
@@ -196,8 +196,8 @@ function SendStoreReportAdmin() {
         if (response.data.code === "1000") {
           setStoreList(response.data.value)
         }
+        setLoading(false);
       }).catch(error => setLoading(false));
-    setLoading(false);
   }
 
   useEffect(() => {
