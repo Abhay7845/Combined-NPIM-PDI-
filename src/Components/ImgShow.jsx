@@ -21,11 +21,13 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
 }));
+
 const ImgShow = (props) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [ImgLoad, setImgLoad] = React.useState(true);
   const [imgLink, setImgLink] = React.useState("");
+
   useEffect(() => {
     setImgLink(props.imgLink);
     if (props.imgLink) {
@@ -34,6 +36,7 @@ const ImgShow = (props) => {
       setValue(1);
     }
   }, [props.imgLink]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     if (event.target.src) {
@@ -71,11 +74,7 @@ const ImgShow = (props) => {
                   width: 1000,
                   height: 900,
                   alt: "Image is not available",
-                  onLoad: () => {
-                    combineImage.length <= 0
-                      ? setImgLoad(true)
-                      : setImgLoad(false);
-                  },
+                  onLoad: () => combineImage.length <= 0 ? setImgLoad(true) : setImgLoad(false),
                 },
                 shouldUsePositiveSpaceLens: true,
                 enlargedImagePosition: "over",

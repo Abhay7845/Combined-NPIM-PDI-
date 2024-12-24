@@ -42,6 +42,7 @@ export const APIGetStatusReports = (url) => {
 export const APIGetL1L2Reports = (url) => {
     return privateApiClient.get(url);
 }
+
 export const APIGetL1L2PendingRtp = (url) => {
     return privateApiClient.get(url);
 }

@@ -12,6 +12,7 @@ import { AiOutlineHeart, AiOutlineBarChart } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { APIGetDropdownCollectionList, APIGetDropdownConsumerBaseList, APIGetDropdownITGroupList, APIGetDropdownList } from "../HostManager/CommonApiCallL3";
 import StatusTabularL1L2 from "./StatusTabularL1L2";
+import { L1L2Reports } from "../DataCenter/DataList";
 
 const LowerHeaderDigital = (props) => {
     const classes = useStyles();
@@ -137,11 +138,12 @@ const LowerHeaderDigital = (props) => {
 
     const ReportsRouting = () => {
         if (loginData.role === "L1" || loginData.role === "L2") {
-            navigate(`/NpimPortal/reportL1andL2/${storeCode}/${rsoName}`);
+            navigate(`/${L1L2Reports}/${storeCode}/${rsoName}`);
         } else if (loginData.role === "L3") {
             navigate(`/NpimPortal/reportL3/${storeCode}/${rsoName}`);
         }
     }
+
     return (
         <React.Fragment>
             <Loading flag={loading} />

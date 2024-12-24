@@ -128,9 +128,9 @@ const NewFeedbackL1AndL2 = () => {
 
 
 
-    // FOR PNPIM LOGIN TYPE 
+    // FOR PNPIM LOGIN TYPE
     const GetProductDetailsPnpim = (productDetails) => {
-        APIPNPIMProductData(`/NPIM/base/npim/get/product/details`, productDetails)
+        APIPNPIMProductData(`api/NPIM/l1l2/npim/get/product/details/l1l2`, productDetails)
             .then((response) => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1001") {
@@ -152,8 +152,20 @@ const NewFeedbackL1AndL2 = () => {
                     });
                     productDetails.setDropState("");
                 } else {
-                    document.getElementById("result").style.visibility = "visible";
-                    setFeedShowState(response.data.value);
+                    if (response.data.value.itemCode === "Already Indented") {
+                        document.getElementById("result").style.visibility = "hidden";
+                        setProductDetails({});
+                        setAlertPopupStatus({
+                            status: true,
+                            main: "Feedback already given for this Product",
+                            contain: "",
+                            mode: true,
+                        });
+                        productDetails.setDropState("");
+                    } else {
+                        document.getElementById("result").style.visibility = "visible";
+                        setFeedShowState(response.data.value);
+                    }
                 }
                 setLoading(false);
             }).catch((error) => setLoading(false));
@@ -215,7 +227,7 @@ const NewFeedbackL1AndL2 = () => {
             itemCode: feedShowState.itemCode,
             direction: direction,
         };
-        APIGetPreNextProductData(`/NPIM/base/npim/get/product/details/PreNex`, Input)
+        APIGetPreNextProductData(`api/NPIM/l1l2/new/npim/get/product/details/PreNex`, Input)
             .then(res => res).then((response) => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1001") {
@@ -330,17 +342,19 @@ const NewFeedbackL1AndL2 = () => {
                         if (sessionStorage.getItem("Npim-type") === "DNPIM") {
                             setAlertPopupStatus({
                                 status: true,
-                                main: "Feedback Submitted Successfuly",
+                                main: "Feedback Submitted Successfully",
                                 contain: "",
                                 mode: true,
                             });
+                            setTimeout(() => {
+                                onClickNextPreBtnHandler("pre");
+                            }, 1000);
                         }
-                        onClickNextPreBtnHandler("pre");
                     }
                     if (sessionStorage.getItem("Npim-type") === "PNPIM") {
                         setAlertPopupStatus({
                             status: true,
-                            main: "Feedback Submitted Successfuly",
+                            main: "Feedback Submitted Successfully",
                             contain: "",
                             mode: true,
                         });
