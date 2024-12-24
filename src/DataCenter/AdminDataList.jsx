@@ -27,7 +27,8 @@ export const L1L2Header = [
     "rsoName",
     "qualityRating",
     "qualityReasons",
-]
+];
+
 
 export const L3Header = [
     "indentDate",

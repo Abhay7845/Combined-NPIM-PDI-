@@ -8,7 +8,7 @@ import ReportsAppBar from "../Components/ReportsAppBar";
 import SideAppBar from "../Components/SideAppBar";
 import UpperHeader from "../Components/UpperHeader";
 import "../Style/CssStyle/DayEndReportAdmin.css";
-import { L1L2Header, L3Header, wishlistHeader } from "../DataCenter/AdminDataList";
+import { L3Header, wishlistHeader } from "../DataCenter/AdminDataList";
 import { APIAdminGetParameter, APIGetEndDayRtp, APIGetWishEndDayRtp } from "../HostManager/CommonApiCallL3";
 import { hitRateColItemCode, hitRateColRegion, } from "../DataCenter/DataList";
 import { toast } from "react-toastify";
@@ -46,19 +46,13 @@ const DayEndDayReportsAdminL1L2 = () => {
         {
             id: 2,
             name: "Day End Report",
-            link: `/NpimPortal/dayEndReportForAdmin/${storeCode}/${rsoName}`,
+            link: `/NpimPortal/new/dayEndReportForAdmin/${storeCode}/${rsoName}`,
             icon: "ReportIcon",
         },
         {
             id: 4,
             name: "Send Store Report",
             link: `/NpimPortal/SendStoreReportAdmin/${storeCode}/${rsoName}`,
-            icon: "SendIcon",
-        },
-        {
-            id: 5,
-            name: "L1L2 End Day Reports",
-            link: `/NpimPortal/dayEndReportForAdmin/L1L2/${storeCode}/${rsoName}`,
             icon: "SendIcon",
         },
     ];
@@ -81,7 +75,7 @@ const DayEndDayReportsAdminL1L2 = () => {
             let urlReport;
             switch (endDayReportInput.level) {
                 case "L1/L2":
-                    urlReport = `/ADMIN/end/day/report/${inputData}`
+                    urlReport = `/api/NPIM/l1l2/end/day/report/${inputData}`
                     break;
                 case "L3":
                     urlReport = `/ADMIN/end/day/report/${inputData}`
@@ -90,11 +84,12 @@ const DayEndDayReportsAdminL1L2 = () => {
                     break;
             }
             setLoading(true);
+            console.log("urlReport==>", urlReport);
             APIGetEndDayRtp(urlReport).then((response) => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1000") {
                     setEndDayReport({
-                        col: endDayReportInput.level === "L3" ? L3Header : endDayReportInput.level === "L1/L2" ? L1L2Header : wishlistHeader,
+                        col: endDayReportInput.level === "L3" ? L3Header : endDayReportInput.level === "L1/L2" ? response.data.coloum : wishlistHeader,
                         rows: response.data.value,
                     });
                 } else if (response.data.code === "1001") {
@@ -273,7 +268,7 @@ const DayEndDayReportsAdminL1L2 = () => {
             {endDayReportInput.level === "L1/L2" ||
                 endDayReportInput.level === "Wishist_Report" ||
                 endDayReportInput.level === "L3" ? (
-                <Container maxWidth='xl' className='my-3'>
+                <Container maxWidth='xl'>
                     {endDayReport.rows.length > 0 &&
                         <DataGridForAdmin
                             col={endDayReport.col}

@@ -166,14 +166,14 @@ const NewFeedbackL1AndL2 = () => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1000") {
                     GetProductDetailsPnpim(productDetails);
-                } else {
+                } else if (response.data.code === "1001") {
                     setAlertPopupStatus({
                         status: true,
                         main: "ItemCode Not In Master",
                         contain: "",
                         mode: true,
                     });
-                    setLoading(false);
+                    productDetails.setDropState("");
                 }
             }).then(err => setLoading(false));
     }

@@ -76,6 +76,8 @@ const NewReportL1AndL2 = () => {
                 console.log("response==>", response.data);
                 if (response.data.code === "1000") {
                     setPndReports(response.data.value);
+                } else {
+                    setPndReports([]);
                 }
                 setLoading(false);
                 setProductInfo({});

@@ -139,19 +139,13 @@ function AdminHome() {
     {
       id: 2,
       name: "Day End Report",
-      link: `/NpimPortal/dayEndReportForAdmin/${storeCode}/${rsoName}`,
+      link: `/NpimPortal/new/dayEndReportForAdmin/${storeCode}/${rsoName}`,
       icon: "ReportIcon",
     },
     {
       id: 4,
       name: "Send Store Report",
       link: `/NpimPortal/SendStoreReportAdmin/${storeCode}/${rsoName}`,
-      icon: "SendIcon",
-    },
-    {
-      id: 5,
-      name: "L1L2 End Day Reports",
-      link: `/NpimPortal/dayEndReportForAdmin/L1L2/${storeCode}/${rsoName}`,
       icon: "SendIcon",
     },
   ];

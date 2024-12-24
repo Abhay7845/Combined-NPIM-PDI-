@@ -62,12 +62,6 @@ function SendStoreReportAdmin() {
       link: `/NpimPortal/SendStoreReportAdmin/${storeCode}/${rsoName}`,
       icon: "SendIcon",
     },
-    {
-      id: 5,
-      name: "L1L2 End Day Reports",
-      link: `/NpimPortal/dayEndReportForAdmin/L1L2/${storeCode}/${rsoName}`,
-      icon: "SendIcon",
-    },
   ];
 
   function onChangeInputHandler(event) {

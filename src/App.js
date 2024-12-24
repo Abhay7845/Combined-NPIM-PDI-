@@ -111,7 +111,7 @@ function App() {
               element={<DayEndReportAdmin />}
             />
             <Route
-              path="/NpimPortal/dayEndReportForAdmin/L1L2/:storeCode/:rsoName"
+              path="/NpimPortal/new/dayEndReportForAdmin/:storeCode/:rsoName"
               element={<DayEndDayReportsAdminL1L2 />}
             />
             <Route

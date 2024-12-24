@@ -69,7 +69,7 @@ const WishListedItems = () => {
         if (response.data.Code === "1000") {
           setCol(WislistLeHeaders);
           setRows(response.data.value);
-        } npim / move / item / wishlist / to / indent
+        }
         setSwitchEnable(true);
         setLoading(false);
       }).catch((error) => setLoading(false));
